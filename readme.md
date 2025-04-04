@@ -2,6 +2,11 @@
 At First You have to npm install :
 
 ```
+npm i --save
+```
+
+Install canvas-confetti 
+```
 npm i --save-dev @types/canvas-confetti --force
 ```
 
