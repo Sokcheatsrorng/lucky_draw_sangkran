@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Sparkles, Trophy, Users, RotateCcw, History } from "lucide-react"
+import { Sparkles, Trophy, Users, RotateCcw, History, Volume2, VolumeX } from "lucide-react"
 import confetti from "canvas-confetti"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -21,46 +21,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-
-// Student data from the provided JSON
-const studentData = [
-  { Name: "Yeng Sokroza", Gender: "Female", "Advanced Subject": "Data Analytics" },
-  { Name: "Phal Seakngim", Gender: "Female", "Advanced Subject": "Spring" },
-  { Name: "Leang Helen", Gender: "Female", "Advanced Subject": "Cybersecurity" },
-  { Name: "Hom pheakakvotey", Gender: "Female", "Advanced Subject": "Cybersecurity" },
-  { Name: "Art Vandeth", Gender: "Male", "Advanced Subject": "Spring" },
-  { Name: "Pol Sokkhann", Gender: "Male", "Advanced Subject": "Spring" },
-  { Name: "Chan samangrathana", Gender: "Female", "Advanced Subject": "Spring" },
-  { Name: "Phy Lymann", Gender: "Male", "Advanced Subject": "Data Analytics" },
-  { Name: "Sanh Panha ", Gender: "Male", "Advanced Subject": "Blockchain" },
-  { Name: "Leang Naikim ", Gender: "Female", "Advanced Subject": "Flutter" },
-  { Name: "Long Piseth", Gender: "Male", "Advanced Subject": "Spring" },
-  { Name: "Sol Vathanak", Gender: "Male", "Advanced Subject": "DevOps" },
-  { Name: "Srorng Sokcheat", Gender: "Female", "Advanced Subject": "Blockchain" },
-  { Name: "Phiv Lyhou", Gender: "Male", "Advanced Subject": "Cybersecurity" },
-  { Name: "Chhem Chhunhy", Gender: "Female", "Advanced Subject": "Data Analytics" },
-  { Name: "Hout Sovannarith", Gender: "Male", "Advanced Subject": "Data Analytics" },
-  { Name: "Ruos Sovanra", Gender: "Male", "Advanced Subject": "DevOps" },
-  { Name: "Thoeng Mengseu", Gender: "Male", "Advanced Subject": "Spring" },
-  { Name: "Channtha Seamey", Gender: "Female", "Advanced Subject": "Data Analytics" },
-  { Name: "Heng Sothib", Gender: "Female", "Advanced Subject": "Flutter" },
-  { Name: "Nouth chanraksa", Gender: "Male", "Advanced Subject": "Blockchain" },
-  { Name: "Noun sovanthorn", Gender: "Female", "Advanced Subject": "Flutter" },
-  { Name: "Yith Sopheaktra", Gender: "Male", "Advanced Subject": "Spring" },
-  { Name: "PhalPhea Pheakdey", Gender: "Male", "Advanced Subject": "Cybersecurity" },
-  { Name: "Phal Sophanmai", Gender: "Female", "Advanced Subject": "Spring" },
-  { Name: "on soben", Gender: "Male", "Advanced Subject": "DevOps" },
-  { Name: "Mom Makara", Gender: "Male", "Advanced Subject": "DevOps" },
-  { Name: "Pov Sokny", Gender: "Male", "Advanced Subject": "DevOps" },
-  { Name: "Eung Lyzhia", Gender: "Female", "Advanced Subject": "Spring" },
-  { Name: "pov soknem", Gender: "Male", "Advanced Subject": "Spring" },
-  { Name: "Vuth sarandy", Gender: "Male", "Advanced Subject": "Spring" },
-  { Name: "Chhoeurn kimla ", Gender: "Male", "Advanced Subject": "Data Analytics" },
-  { Name: "Nhoem Tevy ", Gender: "Female", "Advanced Subject": "Flutter" },
-  { Name: "Kay Kang", Gender: "Male", "Advanced Subject": "Blockchain" },
-  { Name: "Heng Layhak", Gender: "Male", "Advanced Subject": "DevOps" },
-]
-
+import { studentData } from "@/students"
 
 // Get unique subjects for filtering
 const uniqueSubjects = Array.from(new Set(studentData.map((student) => student["Advanced Subject"])))
@@ -83,8 +44,16 @@ export default function LuckyDraw() {
   const [excludePreviousWinners, setExcludePreviousWinners] = useState(true)
   const [winnerHistory, setWinnerHistory] = useState<WinnerRecord[]>([])
   const [drawCategory, setDrawCategory] = useState("Default")
+  const [isMuted, setIsMuted] = useState(false)
+  const [audioLoaded, setAudioLoaded] = useState(false)
+
   const drawIntervalRef = useRef<NodeJS.Timeout | null>(null)
   const confettiCanvasRef = useRef<HTMLCanvasElement>(null)
+
+  // Audio refs
+  const backgroundMusicRef = useRef<HTMLAudioElement | null>(null)
+  const drawMusicRef = useRef<HTMLAudioElement | null>(null)
+  const winnerMusicRef = useRef<HTMLAudioElement | null>(null)
 
   // Load winner history from localStorage on component mount
   useEffect(() => {
@@ -101,6 +70,158 @@ export default function LuckyDraw() {
       }
     }
   }, [])
+
+  // Initialize audio elements
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      // Create audio elements
+      backgroundMusicRef.current = new Audio("/background-music.mp3")
+      drawMusicRef.current = new Audio("/draw-music.mp3")
+      winnerMusicRef.current = new Audio("/winner-music.mp3")
+
+      // Set properties
+      if (backgroundMusicRef.current) {
+        backgroundMusicRef.current.loop = true
+        backgroundMusicRef.current.volume = 0.3
+
+        // Add event listeners to track loading
+        backgroundMusicRef.current.addEventListener("canplaythrough", () => {
+          console.log("Background music loaded and ready to play")
+          setAudioLoaded(true)
+        })
+
+        backgroundMusicRef.current.addEventListener("error", (e) => {
+          console.error("Error loading background music:", e)
+        })
+      }
+
+      if (drawMusicRef.current) {
+        drawMusicRef.current.volume = 0.5
+      }
+
+      if (winnerMusicRef.current) {
+        winnerMusicRef.current.volume = 0.6
+      }
+    }
+
+    // Cleanup on unmount
+    return () => {
+      stopAllMusic()
+    }
+  }, [])
+
+  // Handle mute state changes
+  useEffect(() => {
+    if (backgroundMusicRef.current) {
+      backgroundMusicRef.current.muted = isMuted
+    }
+    if (drawMusicRef.current) {
+      drawMusicRef.current.muted = isMuted
+    }
+    if (winnerMusicRef.current) {
+      winnerMusicRef.current.muted = isMuted
+    }
+  }, [isMuted])
+
+  // Music control functions
+  const playBackgroundMusic = () => {
+    console.log("Manually playing background music")
+    if (backgroundMusicRef.current) {
+      // Ensure other sounds are stopped
+      if (drawMusicRef.current) {
+        drawMusicRef.current.pause()
+        drawMusicRef.current.currentTime = 0
+      }
+      if (winnerMusicRef.current) {
+        winnerMusicRef.current.pause()
+        winnerMusicRef.current.currentTime = 0
+      }
+
+      // Play background music
+      const playPromise = backgroundMusicRef.current.play()
+
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            console.log("Background music playing successfully")
+          })
+          .catch((error) => {
+            console.log("Could not play background music:", error)
+          })
+      }
+    }
+  }
+
+  const playDrawMusic = () => {
+    if (drawMusicRef.current && !isMuted) {
+      // Pause background music
+      if (backgroundMusicRef.current) {
+        backgroundMusicRef.current.pause()
+      }
+
+      // Reset and play draw music
+      drawMusicRef.current.currentTime = 0
+      const playPromise = drawMusicRef.current.play()
+
+      if (playPromise !== undefined) {
+        playPromise.catch((error) => {
+          console.log("Could not play draw music:", error)
+        })
+      }
+    }
+  }
+
+  const playWinnerMusic = () => {
+    if (winnerMusicRef.current && !isMuted) {
+      // Pause other music
+      if (backgroundMusicRef.current) {
+        backgroundMusicRef.current.pause()
+      }
+      if (drawMusicRef.current) {
+        drawMusicRef.current.pause()
+        drawMusicRef.current.currentTime = 0
+      }
+
+      // Reset and play winner music
+      winnerMusicRef.current.currentTime = 0
+      const playPromise = winnerMusicRef.current.play()
+
+      if (playPromise !== undefined) {
+        playPromise.catch((error) => {
+          console.log("Could not play winner music:", error)
+        })
+      }
+
+      // Set timeout to resume background music after winner music finishes
+      setTimeout(() => {
+        playBackgroundMusic()
+      }, 5000) // Adjust based on winner music length
+    }
+  }
+
+  const stopAllMusic = () => {
+    if (backgroundMusicRef.current) {
+      backgroundMusicRef.current.pause()
+      backgroundMusicRef.current.currentTime = 0
+    }
+    if (drawMusicRef.current) {
+      drawMusicRef.current.pause()
+      drawMusicRef.current.currentTime = 0
+    }
+    if (winnerMusicRef.current) {
+      winnerMusicRef.current.pause()
+      winnerMusicRef.current.currentTime = 0
+    }
+  }
+
+  const toggleMute = () => {
+    setIsMuted(!isMuted)
+
+    // If unmuting, try to play background music
+    if (isMuted && backgroundMusicRef.current && !backgroundMusicRef.current.paused) {
+      playBackgroundMusic()
+    }
+  }
 
   // Apply filters to student data and exclude previous winners if needed
   useEffect(() => {
@@ -133,6 +254,9 @@ export default function LuckyDraw() {
     setIsDrawing(true)
     setWinner(null)
 
+    // Play draw music
+    playDrawMusic()
+
     // Rapidly cycle through students to create animation effect
     let counter = 0
     drawIntervalRef.current = setInterval(() => {
@@ -157,6 +281,9 @@ export default function LuckyDraw() {
             setWinner(selectedWinner)
             setIsDrawing(false)
 
+            // Play winner music
+            playWinnerMusic()
+
             // Add to winner history
             const newWinnerRecord: WinnerRecord = {
               name: selectedWinner,
@@ -180,9 +307,10 @@ export default function LuckyDraw() {
               })
 
               myConfetti({
-                particleCount: 100,
+                particleCount: 150,
                 spread: 160,
                 origin: { y: 0.6 },
+                colors: ["#FFD700", "#FF6B6B", "#4ECDC4", "#F9DC5C", "#E84A5F"],
               })
             }
           }
@@ -204,38 +332,98 @@ export default function LuckyDraw() {
       if (drawIntervalRef.current) {
         clearInterval(drawIntervalRef.current)
       }
+      stopAllMusic()
     }
   }, [])
 
   return (
-<div
-  className="min-h-screen p-4 md:p-8"
-  style={{
-    backgroundImage: "url('https://www.shutterstock.com/image-vector/khmer-new-year-traditional-game-260nw-2345743687.jpg'), linear-gradient(to bottom right, #4c1d95, #5b21b6, #312e81)",
-    backgroundSize: "cover",
-    backgroundBlendMode: "overlay",
-  }}
->
+    <div
+      className="min-h-screen p-4 md:p-8 font-kantumruy"
+      style={{
+        backgroundImage: `
+          linear-gradient(to bottom right, rgba(220, 38, 38, 0.8), rgba(234, 88, 12, 0.75)),
+          url('/khmer-pattern.png')
+        `,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      {/* Confetti canvas */}
+      <canvas ref={confettiCanvasRef} className="fixed inset-0 z-50 pointer-events-none" />
+
+      {/* Audio elements - Adding visible audio elements for debugging */}
+      <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={toggleMute}
+          className="bg-white/20 backdrop-blur-sm border-yellow-500/30 hover:bg-white/30 text-white"
+        >
+          {isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
+        </Button>
+
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={playBackgroundMusic}
+          className="bg-white/20 backdrop-blur-sm border-yellow-500/30 hover:bg-white/30 text-white text-xs"
+        >
+          Play Music
+        </Button>
+
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            if (backgroundMusicRef.current) {
+              backgroundMusicRef.current.pause()
+              backgroundMusicRef.current.currentTime = 0
+            }
+          }}
+          className="bg-white/20 backdrop-blur-sm border-red-500/30 hover:bg-red-500/20 text-white text-xs"
+        >
+          Stop Music
+        </Button>
+      </div>
+
+      {/* Fallback audio elements */}
+      <audio id="background-music" src="/background-music.mp3" loop preload="auto" className="hidden" />
+      <audio id="draw-music" src="/draw-music.mp3" preload="auto" className="hidden" />
+      <audio id="winner-music" src="/winner-music.mp3" preload="auto" className="hidden" />
 
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-8">
+          <div className="flex justify-center mb-4">
+            <div className="w-24 h-1 bg-yellow-300 rounded-full"></div>
+          </div>
           <h1 className="text-3xl md:text-5xl font-bold text-white mb-2 flex items-center justify-center">
-            <Sparkles className="mr-2 h-8 w-8 text-yellow-400" />
-            ISTAD SANGKRAN LUCKY DRAW
-            <Sparkles className="ml-2 h-8 w-8 text-yellow-400" />
+            <Sparkles className="mr-2 h-8 w-8 text-yellow-300" />
+            <span className="relative">
+              <span className="relative z-10">ISTAD SANGKRAN LUCKY DRAW</span>
+              <span className="absolute -bottom-2 left-0 right-0 h-3 bg-red-600/30 rounded-full transform -rotate-1"></span>
+            </span>
+            <Sparkles className="ml-2 h-8 w-8 text-yellow-300" />
           </h1>
-         
+          <p className="text-yellow-100 mt-2 max-w-2xl mx-auto">
+            សួស្តីឆ្នាំថ្មី - Happy Khmer New Year! May this Sangkran bring joy, prosperity, and good fortune to all.
+          </p>
+          <div className="flex justify-center mt-4">
+            <div className="w-16 h-1 bg-yellow-300 rounded-full"></div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="md:col-span-1 bg-white/10 backdrop-blur-lg border-purple-400/30">
-            <CardHeader>
+          <Card className="md:col-span-1 bg-white/10 backdrop-blur-lg border-yellow-500/30 shadow-xl overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-300 via-orange-400 to-yellow-300"></div>
+            <CardHeader className="relative">
+              <div className="absolute top-0 right-0 w-20 h-20 -mt-10 -mr-10 bg-yellow-500/20 rounded-full blur-xl"></div>
               <CardTitle className="text-white flex items-center justify-between">
                 <div className="flex items-center">
-                  <Users className="mr-2 h-5 w-5" />
+                  <Users className="mr-2 h-5 w-5 text-yellow-300" />
                   Students
                 </div>
-                <Badge variant="outline" className="ml-2 bg-purple-500/30">
+                <Badge variant="outline" className="ml-2 bg-yellow-500/30 border-yellow-400 text-yellow-100">
                   {availableStudents.length}/{filteredStudents.length}
                 </Badge>
               </CardTitle>
@@ -243,26 +431,32 @@ export default function LuckyDraw() {
             <CardContent>
               <Tabs defaultValue="list" className="w-full">
                 <TabsList className="grid w-full grid-cols-2 bg-white/20">
-                  <TabsTrigger value="list" className="text-white data-[state=active]:bg-white/30">
+                  <TabsTrigger
+                    value="list"
+                    className="text-white data-[state=active]:bg-orange-500/50 data-[state=active]:text-white"
+                  >
                     List
                   </TabsTrigger>
-                  <TabsTrigger value="filter" className="text-white data-[state=active]:bg-white/30">
+                  <TabsTrigger
+                    value="filter"
+                    className="text-white data-[state=active]:bg-orange-500/50 data-[state=active]:text-white"
+                  >
                     Filter
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent value="list" className="mt-4">
-                  <div className="max-h-[300px] overflow-y-auto pr-2 space-y-1">
+                  <div className="max-h-[300px] overflow-y-auto pr-2 space-y-1 custom-scrollbar">
                     {filteredStudents.map((student, index) => {
                       const isWinner = winnerHistory.some((w) => w.name === student)
                       return (
                         <div
                           key={index}
-                          className={`p-2 rounded-md text-white flex items-center justify-between ${
-                            isWinner ? "bg-purple-500/30 line-through opacity-70" : "bg-white/10"
+                          className={`p-2 rounded-md text-white flex items-center justify-between transition-all ${
+                            isWinner ? "bg-yellow-500/30 line-through opacity-70" : "bg-white/10 hover:bg-white/20"
                           }`}
                         >
                           <span>{student}</span>
-                          {isWinner && <Trophy className="h-4 w-4 text-yellow-400" />}
+                          {isWinner && <Trophy className="h-4 w-4 text-yellow-300" />}
                         </div>
                       )
                     })}
@@ -270,12 +464,12 @@ export default function LuckyDraw() {
                 </TabsContent>
                 <TabsContent value="filter" className="mt-4 space-y-4">
                   <div>
-                    <label className="text-sm text-purple-200 block mb-2">Filter by Gender</label>
+                    <label className="text-sm text-yellow-100 block mb-2">Filter by Gender</label>
                     <Select value={filterGender} onValueChange={setFilterGender}>
-                      <SelectTrigger className="bg-white/20 border-purple-400/30 text-white">
+                      <SelectTrigger className="bg-white/20 border-yellow-500/30 text-white focus:ring-yellow-400/50">
                         <SelectValue placeholder="Select Gender" />
                       </SelectTrigger>
-                      <SelectContent className="bg-purple-900 text-white border-purple-400/30">
+                      <SelectContent className="bg-orange-900/90 text-white border-yellow-500/30 font-kantumruy">
                         <SelectItem value="all">All Genders</SelectItem>
                         <SelectItem value="Male">Male</SelectItem>
                         <SelectItem value="Female">Female</SelectItem>
@@ -284,12 +478,12 @@ export default function LuckyDraw() {
                   </div>
 
                   <div>
-                    <label className="text-sm text-purple-200 block mb-2">Filter by Subject</label>
+                    <label className="text-sm text-yellow-100 block mb-2">Filter by Subject</label>
                     <Select value={filterSubject} onValueChange={setFilterSubject}>
-                      <SelectTrigger className="bg-white/20 border-purple-400/30 text-white">
+                      <SelectTrigger className="bg-white/20 border-yellow-500/30 text-white focus:ring-yellow-400/50">
                         <SelectValue placeholder="Select Subject" />
                       </SelectTrigger>
-                      <SelectContent className="bg-purple-900 text-white border-purple-400/30">
+                      <SelectContent className="bg-orange-900/90 text-white border-yellow-500/30 font-kantumruy">
                         <SelectItem value="all">All Subjects</SelectItem>
                         {uniqueSubjects.map((subject) => (
                           <SelectItem key={subject} value={subject}>
@@ -305,19 +499,20 @@ export default function LuckyDraw() {
                       id="exclude-winners"
                       checked={excludePreviousWinners}
                       onCheckedChange={setExcludePreviousWinners}
+                      className="data-[state=checked]:bg-yellow-500"
                     />
-                    <Label htmlFor="exclude-winners" className="text-purple-200">
+                    <Label htmlFor="exclude-winners" className="text-yellow-100">
                       Exclude previous winners
                     </Label>
                   </div>
 
                   <div className="pt-2">
-                    <p className="text-sm text-purple-200">
+                    <p className="text-sm text-yellow-100">
                       {availableStudents.length} student{availableStudents.length !== 1 ? "s" : ""} available for
                       drawing
                     </p>
                     {excludePreviousWinners && winnerHistory.length > 0 && (
-                      <p className="text-xs text-purple-300 mt-1">
+                      <p className="text-xs text-yellow-200/70 mt-1">
                         ({winnerHistory.length} previous winner{winnerHistory.length !== 1 ? "s" : ""} excluded)
                       </p>
                     )}
@@ -333,15 +528,17 @@ export default function LuckyDraw() {
                     Reset
                   </Button>
                 </AlertDialogTrigger>
-                <AlertDialogContent className="bg-purple-900 text-white border-purple-400/30">
+                <AlertDialogContent className="bg-orange-900/95 text-white border-yellow-500/30 font-kantumruy">
                   <AlertDialogHeader>
                     <AlertDialogTitle>Reset Winner History?</AlertDialogTitle>
-                    <AlertDialogDescription className="text-purple-200">
+                    <AlertDialogDescription className="text-yellow-200/70">
                       This will clear all previous winners from the history. This action cannot be undone.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel className="bg-white/10 text-white hover:bg-white/20">Cancel</AlertDialogCancel>
+                    <AlertDialogCancel className="bg-white/10 text-white hover:bg-white/20 border-yellow-500/30">
+                      Cancel
+                    </AlertDialogCancel>
                     <AlertDialogAction onClick={resetWinners} className="bg-red-500 text-white hover:bg-red-600">
                       Reset
                     </AlertDialogAction>
@@ -349,26 +546,28 @@ export default function LuckyDraw() {
                 </AlertDialogContent>
               </AlertDialog>
 
-              <Button variant="outline" className="text-purple-200 border-purple-400/30 hover:bg-purple-500/20">
+              <Button variant="outline" className="text-yellow-100 border-yellow-500/30 hover:bg-yellow-500/20">
                 <History className="h-4 w-4 mr-2" />
                 {winnerHistory.length} Winner{winnerHistory.length !== 1 ? "s" : ""}
               </Button>
             </CardFooter>
           </Card>
 
-          <Card className="md:col-span-2 bg-white/10 backdrop-blur-lg border-purple-400/30">
-            <CardHeader>
+          <Card className="md:col-span-2 bg-white/10 backdrop-blur-lg border-yellow-500/30 shadow-xl overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-300 via-orange-400 to-yellow-300"></div>
+            <CardHeader className="relative">
+              <div className="absolute top-0 right-0 w-32 h-32 -mt-16 -mr-16 bg-yellow-500/20 rounded-full blur-xl"></div>
               <CardTitle className="text-white flex items-center justify-between">
                 <div className="flex items-center">
-                  <Trophy className="mr-2 h-5 w-5 text-yellow-400" />
+                  <Trophy className="mr-2 h-5 w-5 text-yellow-300" />
                   Lucky Draw Results
                 </div>
                 <div>
                   <Select value={drawCategory} onValueChange={setDrawCategory}>
-                    <SelectTrigger className="bg-white/20 border-purple-400/30 text-white w-[150px]">
+                    <SelectTrigger className="bg-white/20 border-yellow-500/30 text-white w-[150px] focus:ring-yellow-400/50">
                       <SelectValue placeholder="Category" />
                     </SelectTrigger>
-                    <SelectContent className="bg-purple-900 text-white border-purple-400/30">
+                    <SelectContent className="bg-orange-900/90 text-white border-yellow-500/30 font-kantumruy">
                       <SelectItem value="Default">Default</SelectItem>
                       <SelectItem value="First Prize">First Prize</SelectItem>
                       <SelectItem value="Second Prize">Second Prize</SelectItem>
@@ -382,37 +581,71 @@ export default function LuckyDraw() {
             <CardContent>
               <Tabs defaultValue="current" className="w-full">
                 <TabsList className="grid w-full grid-cols-2 bg-white/20">
-                  <TabsTrigger value="current" className="text-white data-[state=active]:bg-white/30">
+                  <TabsTrigger
+                    value="current"
+                    className="text-white data-[state=active]:bg-orange-500/50 data-[state=active]:text-white"
+                  >
                     Current Draw
                   </TabsTrigger>
-                  <TabsTrigger value="history" className="text-white data-[state=active]:bg-white/30">
+                  <TabsTrigger
+                    value="history"
+                    className="text-white data-[state=active]:bg-orange-500/50 data-[state=active]:text-white"
+                  >
                     History
                   </TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="current" className="mt-4">
-                  <div className="flex flex-col items-center justify-center min-h-[300px]">
+                  <div className="flex flex-col items-center justify-center min-h-[300px] relative">
+                    {/* Decorative elements */}
+                    <div className="absolute top-0 left-0 w-16 h-16 opacity-20">
+                      <div className="w-full h-full rounded-full bg-yellow-300 blur-md"></div>
+                    </div>
+                    <div className="absolute bottom-0 right-0 w-20 h-20 opacity-20">
+                      <div className="w-full h-full rounded-full bg-orange-300 blur-md"></div>
+                    </div>
+
                     {winner ? (
-                      <div className="text-center animate-fadeIn">
-                        <div className="text-2xl text-purple-200 mb-2">And the winner is...</div>
-                        <div className="text-4xl md:text-6xl font-bold text-white mb-4 animate-pulse">{winner}</div>
-                        <Badge className="bg-yellow-500 hover:bg-yellow-600 text-black text-lg py-1 px-4">
-                          {drawCategory} Winner!
-                        </Badge>
+                      <div className="text-center animate-fadeIn relative z-10">
+                        <div className="text-2xl text-yellow-200 mb-2">
+                          <span className="relative">
+                            And the winner is...
+                            <span className="absolute -bottom-1 left-0 right-0 h-1 bg-yellow-400/50"></span>
+                          </span>
+                        </div>
+                        <div className="text-4xl md:text-6xl font-bold text-white mb-6 relative">
+                          <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-100 to-yellow-300">
+                            {winner}
+                          </span>
+                          <span className="absolute -bottom-2 left-0 right-0 h-2 bg-yellow-500/30 transform -rotate-1"></span>
+                        </div>
+                        <div className="relative inline-block">
+                          <Badge className="bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-black text-lg py-1 px-6 border-none">
+                            {drawCategory} Winner!
+                          </Badge>
+                          <div className="absolute -inset-1 bg-yellow-400/20 blur-sm rounded-full -z-10"></div>
+                        </div>
                       </div>
                     ) : isDrawing ? (
-                      <div className="text-center">
-                        <div className="text-xl text-purple-200 mb-4">Selecting...</div>
-                        <div className="text-3xl md:text-5xl font-bold text-white animate-bounce">
+                      <div className="text-center relative z-10">
+                        <div className="text-xl text-yellow-200 mb-4">
+                          <span className="inline-block animate-spin-slow mr-2">✨</span>
+                          Selecting...
+                          <span className="inline-block animate-spin-slow ml-2">✨</span>
+                        </div>
+                        <div className="text-3xl md:text-5xl font-bold text-white animate-pulse">
                           {currentSelection}
                         </div>
                       </div>
                     ) : (
-                      <div className="text-center text-purple-200">
+                      <div className="text-center text-yellow-100 relative z-10">
                         {availableStudents.length < 1 ? (
                           <p>No students available for drawing</p>
                         ) : (
-                          <p>Click the button below to start the lucky draw</p>
+                          <div>
+                            <p className="mb-2">Click the button below to start the lucky draw</p>
+                            <div className="text-yellow-300 text-5xl animate-bounce">↓</div>
+                          </div>
                         )}
                       </div>
                     )}
@@ -420,21 +653,26 @@ export default function LuckyDraw() {
                 </TabsContent>
 
                 <TabsContent value="history" className="mt-4">
-                  <div className="max-h-[300px] overflow-y-auto pr-2">
+                  <div className="max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
                     {winnerHistory.length === 0 ? (
-                      <div className="text-center text-purple-200 py-10">
+                      <div className="text-center text-yellow-100 py-10">
                         No winners yet. Start a draw to see results here.
                       </div>
                     ) : (
                       <div className="space-y-3">
                         {winnerHistory.map((record, index) => (
-                          <div key={index} className="bg-white/10 p-3 rounded-md text-white">
+                          <div
+                            key={index}
+                            className="bg-white/10 hover:bg-white/15 p-3 rounded-md text-white border-l-4 border-yellow-500 transition-all"
+                          >
                             <div className="flex justify-between items-start">
                               <div>
                                 <div className="font-semibold text-lg">{record.name}</div>
-                                <div className="text-xs text-purple-300 mt-1">{record.timestamp}</div>
+                                <div className="text-xs text-yellow-200/70 mt-1">{record.timestamp}</div>
                               </div>
-                              <Badge className="bg-purple-500/50">{record.category}</Badge>
+                              <Badge className="bg-yellow-500/50 border-yellow-400/50 text-yellow-50">
+                                {record.category}
+                              </Badge>
                             </div>
                           </div>
                         ))}
@@ -448,12 +686,19 @@ export default function LuckyDraw() {
               <Button
                 onClick={startDraw}
                 disabled={availableStudents.length < 1 || isDrawing}
-                className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-8 py-6 text-lg"
+                className="relative group overflow-hidden bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold px-8 py-6 text-lg border-2 border-yellow-300/50"
               >
-                {isDrawing ? "Drawing..." : "Start Lucky Draw"}
+                <span className="relative z-10">{isDrawing ? "Drawing..." : "Start Lucky Draw"}</span>
+                <span className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
               </Button>
             </CardFooter>
           </Card>
+        </div>
+
+        {/* Footer with Khmer New Year message */}
+        <div className="mt-8 text-center text-yellow-200 text-lg">
+          <p className="text-2xl font-medium">សូមឲ្យមានសុខភាពល្អ សិរីមង្គល និងសំណាងល្អក្នុងឆ្នាំថ្មីនេះ</p>
+          <p className="mt-1">May you have good health, prosperity, and good luck in this New Year</p>
         </div>
       </div>
     </div>
