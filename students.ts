@@ -34,25 +34,7 @@
 
 // Student data from the provided JSON
 export const studentData = [
-  {
-    "Timestamp": 45742.776756875,
-    Full_Name: "Chaing polin",
-    "Gender": "Male",
-    "Class": "Foundation",
-    "Which  Generation do you study? ": "Generation 3",
-    "Which Shift do you study?": "Afternoon",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "Go to Mỹ home town "
-  },
-  {
-    "Timestamp": 45742.776889444445,
-    "QR Payment": 10,
-    Full_Name: "PhalPhea Pheakdey",
-    "Gender": "Male",
-    "Class": "ISTAD-ITE-Scholar-2nd-Generation",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "I end work at 5:20 teacher "
-  },
+
   {
     "Timestamp": 45742.777184756946,
     "QR Payment": 10,
@@ -116,15 +98,6 @@ export const studentData = [
     "Can you join the event?": "Yes"
   },
   {
-    "Timestamp": 45743.29949767361,
-    Full_Name: "ព្រីង សុវណ្ណវត្តី",
-    "Gender": "Female",
-    "Class": "Association-1st Generation",
-    "Do you have any comment or suggestion?": "I hope everyone have fun",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "My family alread have a plan so I will be on my way to my hometown at the 5th of April and cannot attend the school event."
-  },
-  {
     "Timestamp": 45743.36628248842,
     "QR Payment": 10,
     Full_Name: "Art Vandeth",
@@ -144,40 +117,6 @@ export const studentData = [
     "Which Shift do you study?": "Afternoon",
     "Can you join the event?": "No",
     "If you cannot join the whole event, please give us the reason": "Sorry I can't join this event because I go to hometown."
-  },
-  {
-    "Timestamp": 45743.431905335645,
-    Full_Name: "Long Poseth",
-    "Gender": "Male",
-    "Class": "ISTAD-ITE-Scholar-2nd-Generation",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "I'm busy at hometown "
-  },
-  {
-    "Timestamp": 45743.44393081019,
-    Full_Name: "Phou Kukseng",
-    "Gender": "Male",
-    "Class": "Foundation",
-    "Which  Generation do you study? ": "Generation 3",
-    "Which Shift do you study?": "Afternoon",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "I can't join because I'm going to my hometown. "
-  },
-  {
-    "Timestamp": 45743.504863622686,
-    Full_Name: "Ing Muyleang",
-    "Gender": "Male",
-    "Class": "ISTAD-ITE-Scholar-1st-Generation",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "Because I'm in Korea."
-  },
-  {
-    "Timestamp": 45743.57362619213,
-    Full_Name: "Pos Panha",
-    "Gender": "Female",
-    "Class": "ISTAD-ITE-Scholar-1st-Generation",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "I am going back home that day cher"
   },
   {
     "Timestamp": 45743.58041134259,
@@ -234,27 +173,7 @@ export const studentData = [
     "Do you have any comment or suggestion?": "Dach luy hz",
     "Can you join the event?": "Yes"
   },
-  {
-    "Timestamp": 45744.50233390046,
-    Full_Name: "Sorn Sophamarinet",
-    "Gender": "Female",
-    "Class": "Foundation",
-    "Which  Generation do you study? ": "Generation 3",
-    "Which Shift do you study?": "Morning",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "I have to go home with my sister because she afraid to go alone . "
-  },
-  {
-    "Timestamp": 45744.64042364583,
-    Full_Name: "Luy kanika ",
-    "Gender": "Female",
-    "Class": "Foundation",
-    "Which  Generation do you study? ": "Generation 2",
-    "Which Shift do you study?": "Morning",
-    "Do you have any comment or suggestion?": "No",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "Go to my hometown "
-  },
+  
   {
     "Timestamp": 45744.79829189814,
     "QR Payment": 10,
@@ -275,14 +194,6 @@ export const studentData = [
     "Can you join the game event (ល្បែងប្រជាប្រិយ)  in the morning and afternoon?": "Yes",
     "Can you join the party event in the  evening?": "Yes",
     "Can you join the event?": "Yes"
-  },
-  {
-    "Timestamp": 45746.01702621528,
-    Full_Name: "Leang Naikim ",
-    "Gender": "Female",
-    "Class": "ISTAD-ITE-Scholar-2nd-Generation",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "ខ្ញុំជាប់ទៅឆេងម៉េង"
   },
   {
     "Timestamp": 45746.07569278935,
@@ -349,14 +260,6 @@ export const studentData = [
     "Can you join the event?": "Yes"
   },
   {
-    "Timestamp": 45747.43022471065,
-    Full_Name: "PAO Ponareach",
-    "Gender": "Male",
-    "Class": "ISTAD-ITE-Scholar-1st-Generation",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "Sorry teacher I can’t join this event on those day because I have to go to Kompot to Cheng Meng."
-  },
-  {
     "Timestamp": 45747.4632799074,
     "QR Payment": 10,
     Full_Name: "Phon Sobon",
@@ -413,15 +316,6 @@ export const studentData = [
     "Can you join the event?": "Yes"
   },
   {
-    "Timestamp": 45747.75699597222,
-    Full_Name: "Nhoem Tevy",
-    "Gender": "Female",
-    "Class": "ISTAD-ITE-Scholar-2nd-Generation",
-    "Do you have any comment or suggestion?": "Happy Khmer New Year Dear Teacher!",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "I'm at hometown "
-  },
-  {
     "Timestamp": 45747.77085814815,
     "QR Payment": 10,
     Full_Name: "Theam Kimhout",
@@ -474,14 +368,6 @@ export const studentData = [
     "Can you join the game event (ល្បែងប្រជាប្រិយ)  in the morning and afternoon?": "Yes",
     "Can you join the party event in the  evening?": "Yes",
     "Can you join the event?": "Yes"
-  },
-  {
-    "Timestamp": 45747.860651828705,
-    Full_Name: "Tourn Vuthy",
-    "Gender": "Male",
-    "Class": "Full Stack-1st Generation",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "Because I have an exam at my university. "
   },
   {
     "Timestamp": 45747.86253136574,
@@ -537,14 +423,6 @@ export const studentData = [
     "Can you join the event?": "Yes"
   },
   {
-    "Timestamp": 45747.94597082176,
-    Full_Name: "Channtha Seamey",
-    "Gender": "Female",
-    "Class": "ISTAD-ITE-Scholar-2nd-Generation",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "I go to my hometown."
-  },
-  {
     "Timestamp": 45748.36434006944,
     "QR Payment": 10,
     Full_Name: "Seng Seang Leng",
@@ -554,23 +432,6 @@ export const studentData = [
     "If you can't join the game event (ល្បែងប្រជាប្រិយ) in the morning and afternoon, what is your reason?": "I have work.",
     "Can you join the party event in the  evening?": "Yes",
     "Can you join the event?": "Yes"
-  },
-  {
-    "Timestamp": 45748.39043688658,
-    "QR Payment": "No",
-    Full_Name: "Neuy Mich",
-    "Gender": "Male",
-    "Class": "ISTAD-ITE-Scholar-1st-Generation",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "Busy at hometown"
-  },
-  {
-    "Timestamp": 45748.398255,
-    Full_Name: "Hout Sovannarith",
-    "Gender": "Male",
-    "Class": "ISTAD-ITE-Scholar-2nd-Generation",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": " ជាប់រវល់សែននៅស្រុក"
   },
   {
     "Timestamp": 45748.398345231486,
@@ -613,34 +474,6 @@ export const studentData = [
     "Can you join the game event (ល្បែងប្រជាប្រិយ)  in the morning and afternoon?": "Yes",
     "Can you join the party event in the  evening?": "Yes",
     "Can you join the event?": "Yes"
-  },
-  {
-    "Timestamp": 45748.406070682875,
-    "QR Payment": "Sorry Teacher I can’t join 🙏🏻🙏🏻",
-    Full_Name: "Thoeng Mengseu",
-    "Gender": "Male",
-    "Class": "ISTAD-ITE-Scholar-1st-Generation",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "Sorry, teacher. I really want to join, but I can’t afford it right now.",
-    "The Agenda For The Event From 10:00AM - 2:00PM": "Sorry Teacher I can’t join 🙏🏻🙏🏻",
-    "The Agenda For The Event From  2:00PM-8:00PM": "Sorry Teacher I can’t join 🙏🏻🙏🏻"
-  },
-  {
-    "Timestamp": 45748.40833556713,
-    Full_Name: "Leng Narak",
-    "Gender": "Male",
-    "Class": "Full Stack-1st Generation",
-    "Do you have any comment or suggestion?": "No, I don't.",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "Because I go to ឆេងមេង."
-  },
-  {
-    "Timestamp": 45748.40953716435,
-    Full_Name: "Chhun Meyling",
-    "Gender": "Female",
-    "Class": "Full Stack-1st Generation",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "Because I have to go to my hometown\n"
   },
   {
     "Timestamp": 45748.41075130787,
@@ -692,15 +525,6 @@ export const studentData = [
     "Can you join the game event (ល្បែងប្រជាប្រិយ)  in the morning and afternoon?": "Yes",
     "Can you join the party event in the  evening?": "Yes",
     "Can you join the event?": "Yes"
-  },
-  {
-    "Timestamp": 45748.460604293985,
-    Full_Name: "Chhour echhean ",
-    "Gender": "Male",
-    "Class": "Full Stack-1st Generation",
-    "Do you have any comment or suggestion?": "None",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "I’m going to go hometown "
   },
   {
     "Timestamp": 45748.47356706018,
@@ -776,32 +600,6 @@ export const studentData = [
     "Can you join the event?": "Yes"
   },
   {
-    "Timestamp": 45748.62790828704,
-    Full_Name: "EY Channim",
-    "Gender": "Female",
-    "Class": "Full Stack-1st Generation",
-    "Do you have any comment or suggestion?": "no",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "Busy at home"
-  },
-  {
-    "Timestamp": 45748.65809469907,
-    Full_Name: "Sim pengseang",
-    "Gender": "Male",
-    "Class": "Full Stack-1st Generation",
-    "Do you have any comment or suggestion?": "I have no suggestions, thanks in advance ",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "I am having a emergency task at that day which it is family festival that l need to go to my hometown "
-  },
-  {
-    "Timestamp": 45748.71360059028,
-    Full_Name: "Chhay Seavpav",
-    "Gender": "Male",
-    "Class": "ISTAD-ITE-Scholar-1st-Generation",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "I will be unavailable on that day due to personal obligations. Thank you for your understanding."
-  },
-  {
     "Timestamp": 45748.72546878472,
     "QR Payment": 10,
     Full_Name: "យ៉ាន កុម្ភៈ",
@@ -812,15 +610,6 @@ export const studentData = [
     "Can you join the party event in the  evening?": "Yes",
     "Do you have any comment or suggestion?": "no",
     "Can you join the event?": "Yes"
-  },
-  {
-    "Timestamp": 45748.781147581016,
-    Full_Name: "PHALSEAKNGIM ",
-    "Gender": "Female",
-    "Class": "ISTAD-ITE-Scholar-2nd-Generation",
-    "Do you have any comment or suggestion?": " ",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": " I live in hometown. "
   },
   {
     "Timestamp": 45748.78686976852,
@@ -856,15 +645,7 @@ export const studentData = [
     "Can you join the party event in the  evening?": "Yes",
     "Can you join the event?": "Yes"
   },
-  {
-    "Timestamp": 45748.880294884264,
-    Full_Name: "Noun sovanthorn ",
-    "Gender": "Female",
-    "Class": "ISTAD-ITE-Scholar-2nd-Generation",
-    "Do you have any comment or suggestion?": "N/A",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "ជាប់បុណ្យបច្ច័យបួននៅស្រុក"
-  },
+
   {
     "Timestamp": 45748.90470292824,
     "QR Payment": 10,
@@ -910,15 +691,6 @@ export const studentData = [
     "Can you join the event?": "Yes",
     "The Agenda For The Event From 10:00AM - 2:00PM": "The event will be perfect ",
     "The Agenda For The Event From  2:00PM-8:00PM": "The event will be perfect "
-  },
-  {
-    "Timestamp": 45749.395726284725,
-    Full_Name: "គ្រី សុបុត្រទី",
-    "Gender": "Male",
-    "Class": "Full Stack-1st Generation",
-    "Do you have any comment or suggestion?": "No, I don't teacher.",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "I have a event to join full day but I can join only afternoon."
   },
   {
     "Timestamp": 45749.48430177083,
@@ -991,14 +763,6 @@ export const studentData = [
     "Can you join the event?": "Yes"
   },
   {
-    "Timestamp": 45749.708921921294,
-    Full_Name: "Dina Pisethi ",
-    "Gender": "Male",
-    "Class": "Full Stack-1st Generation",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "I am volunteer at RUPP Sangkran "
-  },
-  {
     "Timestamp": 45749.82843959491,
     Full_Name: "Sim Sol",
     "Gender": "Male",
@@ -1028,22 +792,7 @@ export const studentData = [
     "If you can't join, What is the reason?": "I am not sure if I will be free.",
     "Can you join the event?": "Yes"
   },
-  {
-    "Timestamp": 45750.41123868056,
-    Full_Name: "Seng porkeat",
-    "Gender": "Male",
-    "Class": "Full Stack-1st Generation",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "Visit my uncle "
-  },
-  {
-    "Timestamp": 45750.41271618055,
-    Full_Name: "Chim Theara",
-    "Gender": "Female",
-    "Class": "Full Stack-1st Generation",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "I have to submit projects in classes at University."
-  },
+ 
   {
     "Timestamp": 45750.4715678125,
     Full_Name: "សារឿន សុធាឫទ្ធិ",
@@ -1056,15 +805,6 @@ export const studentData = [
     "The Agenda For The Event From 10:00AM - 2:00PM": "លាក់កន្សែង"
   },
   {
-    "Timestamp": 45750.51648694444,
-    Full_Name: "Vyra Vannarith ",
-    "Gender": "Male",
-    "Class": "Full Stack-1st Generation",
-    "Do you have any comment or suggestion?": "Not yet",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "Maybe I'm busy at school, rupp"
-  },
-  {
     "Timestamp": 45750.52921978009,
     Full_Name: "Cheng Devith ",
     "Gender": "Male",
@@ -1072,15 +812,6 @@ export const studentData = [
     "Can you join the game event (ល្បែងប្រជាប្រិយ)  in the morning and afternoon?": "Yes",
     "Can you join the party event in the  evening?": "Yes",
     "Can you join the event?": "Yes"
-  },
-  {
-    "Timestamp": 45750.5294199537,
-    Full_Name: "Rin Bunvarn",
-    "Gender": "Female",
-    "Class": "Full Stack-1st Generation",
-    "Do you have any comment or suggestion?": "nope\n",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "i have to go to my hometown"
   },
   {
     "Timestamp": 45750.94481274305,
@@ -1178,14 +909,6 @@ export const studentData = [
     "Can you join the party event in the  evening?": "No",
     "If you can't join, What is the reason?": "គ្រាន់តែទៅលេងធម្មតា មិនបានបង់លុយសម្រាប់ថ្លៃម្ហូបទេ",
     "Can you join the event?": "Yes"
-  }
-  , {
-    "Timestamp": 45752.42078019676,
-    Full_Name: "Lor Vengroth",
-    "Gender": "Male",
-    "Class": "Association-1st Generation",
-    "Can you join the event?": "No",
-    "If you cannot join the whole event, please give us the reason": "I’m at my hometown kompong spue"
   },
   {
     "Timestamp": 45752.48411430555,
@@ -1197,7 +920,44 @@ export const studentData = [
     "Can you join the game event (ល្បែងប្រជាប្រិយ)  in the morning and afternoon?": "Yes",
     "Can you join the party event in the  evening?": "Yes",
     "Can you join the event?": "Yes"
+  },
+  {
+    "Timestamp": 45742.776889444445,
+    "QR Payment": 10,
+    Full_Name: "PhalPhea Pheakdey",
+    "Gender": "Male",
+    "Class": "ISTAD-ITE-Scholar-2nd-Generation",
+    "Can you join the event?": "No",
+    "If you cannot join the whole event, please give us the reason": "I end work at 5:20 teacher "
+  },
+  {
+    "Timestamp": 45742.776889444445,
+    "QR Payment": 10,
+    Full_Name: "Sin Many",
+    "Gender": "Male",
+    "Class": "ISTAD-ITE-Scholar-2nd-Generation",
+    "Can you join the event?": "No",
+    "If you cannot join the whole event, please give us the reason": "I end work at 5:20 teacher "
+  },
+  {
+    "Timestamp": 45742.776889444445,
+    "QR Payment": 10,
+    Full_Name: "Sin SreyPhea",
+    "Gender": "Male",
+    "Class": "ISTAD-ITE-Scholar-2nd-Generation",
+    "Can you join the event?": "No",
+    "If you cannot join the whole event, please give us the reason": "I end work at 5:20 teacher "
+  },
+  {
+    "Timestamp": 45742.776889444445,
+    "QR Payment": 10,
+   Full_Name: "Thoeung Mengsue",
+    "Gender": "Male",
+    "Class": "ISTAD-ITE-Scholar-2nd-Generation",
+    "Can you join the event?": "No",
+    "If you cannot join the whole event, please give us the reason": "I end work at 5:20 teacher "
   }
+
 ]
 
 

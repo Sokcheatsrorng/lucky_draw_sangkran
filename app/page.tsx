@@ -226,6 +226,7 @@ export default function LuckyDraw() {
   // Apply filters to student data and exclude previous winners if needed
   useEffect(() => {
     let result = [...studentData]
+    console.log(result.length)
 
     if (filterGender !== "all") {
       result = result.filter((student) => student.Gender === filterGender)
