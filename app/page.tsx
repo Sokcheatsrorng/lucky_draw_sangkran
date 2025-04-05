@@ -551,7 +551,7 @@ export default function LuckyDraw() {
 
               <Button
                 variant="outline"
-                className="text-black bg-white border-yellow-500/30 hover:bg-yellow-500/20 w-full sm:w-auto"
+                className="text-white bg-white border-yellow-500/30 hover:bg-yellow-500/20 w-full sm:w-auto"
               >
                 <History className="h-4 w-4 mr-2" />
                 {winnerHistory.length} Winner{winnerHistory.length !== 1 ? "s" : ""}
