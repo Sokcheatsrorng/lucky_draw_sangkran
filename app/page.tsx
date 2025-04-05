@@ -341,8 +341,8 @@ export default function LuckyDraw() {
       className="min-h-screen  p-2 sm:p-4 md:p-8 lg:p-12 xl:p-16 font-kantumruy  mx-auto"
       style={{
         backgroundImage: `
-          linear-gradient(to bottom right, rgba(220, 38, 38, 0.8), rgba(234, 88, 12, 0.75)),
-          url('/khmer-pattern.png')
+            linear-gradient(to bottom right, rgba(220, 38, 38, 0.8), rgba(37, 99, 235, 0.75)),
+          url('https://i.pinimg.com/736x/d6/7a/96/d67a962bb905da7072c22d2f741dc07e.jpg')
         `,
         backgroundSize: "cover",
         backgroundPosition: "center",
