@@ -512,7 +512,7 @@ export default function LuckyDraw() {
                       drawing
                     </p>
                     {excludePreviousWinners && winnerHistory.length > 0 && (
-                      <p className="text-xs text-yellow-200/70 mt-1">
+                      <p className="text-xs text-yellow-200/70 mt-1 bg-white">
                         ({winnerHistory.length} previous winner{winnerHistory.length !== 1 ? "s" : ""} excluded)
                       </p>
                     )}
@@ -525,7 +525,7 @@ export default function LuckyDraw() {
                 <AlertDialogTrigger asChild>
                   <Button
                     variant="outline"
-                    className="text-red-300 border-red-400/30 hover:bg-red-500/20 w-full sm:w-auto"
+                    className="text-red-300 border-red-400/30 bg-white hover:bg-red-500/20 w-full sm:w-auto"
                   >
                     <RotateCcw className="h-4 w-4 mr-2" />
                     Reset
