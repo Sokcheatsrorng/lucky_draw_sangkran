@@ -1186,6 +1186,17 @@ export const studentData = [
     "Class": "Association-1st Generation",
     "Can you join the event?": "No",
     "If you cannot join the whole event, please give us the reason": "I’m at my hometown kompong spue"
+  },
+  {
+    "Timestamp": 45752.48411430555,
+    Full_Name: "PISETH Sattya",
+    "Gender": "Male",
+    "Class": "Foundation",
+    "Which  Generation do you study? ": "Generation 2",
+    "Which Shift do you study?": "Afternoon",
+    "Can you join the game event (ល្បែងប្រជាប្រិយ)  in the morning and afternoon?": "Yes",
+    "Can you join the party event in the  evening?": "Yes",
+    "Can you join the event?": "Yes"
   }
 ]
 
