@@ -24,7 +24,7 @@ import {
 import { studentData } from "@/students"
 
 // Get unique subjects for filtering
-const uniqueSubjects = Array.from(new Set(studentData.map((student) => student["Advanced Subject"])))
+const uniqueSubjects = Array.from(new Set(studentData.map((student) => student["Class"])))
 
 // Type for winner history
 type WinnerRecord = {
@@ -75,8 +75,8 @@ export default function LuckyDraw() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       // Create audio elements
-      backgroundMusicRef.current = new Audio("/background-music.mp3")
-      drawMusicRef.current = new Audio("/draw-music.mp3")
+      // backgroundMusicRef.current = new Audio("/background-music.mp3")
+      drawMusicRef.current = new Audio("/spin-232536.mp3")
       winnerMusicRef.current = new Audio("/winner-music.mp3")
 
       // Set properties
@@ -232,10 +232,10 @@ export default function LuckyDraw() {
     }
 
     if (filterSubject !== "all") {
-      result = result.filter((student) => student["Advanced Subject"] === filterSubject)
+      result = result.filter((student) => student["Class"] === filterSubject)
     }
 
-    const allFilteredNames = result.map((student) => student.Name)
+    const allFilteredNames = result.map((student) => student.Full_Name)
     setFilteredStudents(allFilteredNames)
 
     // If we should exclude previous winners, filter them out
@@ -338,7 +338,7 @@ export default function LuckyDraw() {
 
   return (
     <div
-      className="min-h-screen p-4 md:p-8 font-kantumruy"
+      className="min-h-screen  p-2 sm:p-4 md:p-8 lg:p-12 xl:p-16 font-kantumruy  mx-auto"
       style={{
         backgroundImage: `
           linear-gradient(to bottom right, rgba(220, 38, 38, 0.8), rgba(234, 88, 12, 0.75)),
@@ -353,7 +353,7 @@ export default function LuckyDraw() {
       <canvas ref={confettiCanvasRef} className="fixed inset-0 z-50 pointer-events-none" />
 
       {/* Audio elements - Adding visible audio elements for debugging */}
-      <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
+      {/* <div className="fixed top-2 right-2 sm:top-4 sm:right-4 z-50 flex flex-col sm:flex-row items-end sm:items-center gap-1 sm:gap-2">
         <Button
           variant="outline"
           size="icon"
@@ -385,10 +385,10 @@ export default function LuckyDraw() {
         >
           Stop Music
         </Button>
-      </div>
+      </div> */}
 
       {/* Fallback audio elements */}
-      <audio id="background-music" src="/background-music.mp3" loop preload="auto" className="hidden" />
+      {/* <audio id="background-music" src="/background-music.mp3" loop preload="auto" className="hidden" /> */}
       <audio id="draw-music" src="/draw-music.mp3" preload="auto" className="hidden" />
       <audio id="winner-music" src="/winner-music.mp3" preload="auto" className="hidden" />
 
@@ -397,13 +397,13 @@ export default function LuckyDraw() {
           <div className="flex justify-center mb-4">
             <div className="w-24 h-1 bg-yellow-300 rounded-full"></div>
           </div>
-          <h1 className="text-3xl md:text-5xl font-bold text-white mb-2 flex items-center justify-center">
-            <Sparkles className="mr-2 h-8 w-8 text-yellow-300" />
+          <h1 className="text-xl sm:text-3xl md:text-5xl font-bold text-white mb-2 flex items-center justify-center">
+            <Sparkles className="mr-1 sm:mr-2 h-6 w-6 sm:h-8 sm:w-8 text-yellow-300" />
             <span className="relative">
               <span className="relative z-10">ISTAD SANGKRAN LUCKY DRAW</span>
               <span className="absolute -bottom-2 left-0 right-0 h-3 bg-red-600/30 rounded-full transform -rotate-1"></span>
             </span>
-            <Sparkles className="ml-2 h-8 w-8 text-yellow-300" />
+            <Sparkles className="ml-1 sm:ml-2 h-6 w-6 sm:h-8 sm:w-8 text-yellow-300" />
           </h1>
           <p className="text-yellow-100 mt-2 max-w-2xl mx-auto">
             សួស្តីឆ្នាំថ្មី - Happy Khmer New Year! May this Sangkran bring joy, prosperity, and good fortune to all.
@@ -413,7 +413,7 @@ export default function LuckyDraw() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6">
           <Card className="md:col-span-1 bg-white/10 backdrop-blur-lg border-yellow-500/30 shadow-xl overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-300 via-orange-400 to-yellow-300"></div>
             <CardHeader className="relative">
@@ -520,10 +520,13 @@ export default function LuckyDraw() {
                 </TabsContent>
               </Tabs>
             </CardContent>
-            <CardFooter className="flex justify-between">
+            <CardFooter className="flex flex-col sm:flex-row gap-2 sm:justify-between px-3 sm:px-6">
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button variant="outline" className="text-red-300 border-red-400/30 hover:bg-red-500/20">
+                  <Button
+                    variant="outline"
+                    className="text-red-300 border-red-400/30 hover:bg-red-500/20 w-full sm:w-auto"
+                  >
                     <RotateCcw className="h-4 w-4 mr-2" />
                     Reset
                   </Button>
@@ -546,7 +549,10 @@ export default function LuckyDraw() {
                 </AlertDialogContent>
               </AlertDialog>
 
-              <Button variant="outline" className="text-yellow-100 border-yellow-500/30 hover:bg-yellow-500/20">
+              <Button
+                variant="outline"
+                className="text-black border-yellow-500/30 hover:bg-yellow-500/20 w-full sm:w-auto"
+              >
                 <History className="h-4 w-4 mr-2" />
                 {winnerHistory.length} Winner{winnerHistory.length !== 1 ? "s" : ""}
               </Button>
@@ -557,22 +563,20 @@ export default function LuckyDraw() {
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-300 via-orange-400 to-yellow-300"></div>
             <CardHeader className="relative">
               <div className="absolute top-0 right-0 w-32 h-32 -mt-16 -mr-16 bg-yellow-500/20 rounded-full blur-xl"></div>
-              <CardTitle className="text-white flex items-center justify-between">
+              <CardTitle className="text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                 <div className="flex items-center">
                   <Trophy className="mr-2 h-5 w-5 text-yellow-300" />
                   Lucky Draw Results
                 </div>
-                <div>
+                <div className="w-full sm:w-auto">
                   <Select value={drawCategory} onValueChange={setDrawCategory}>
-                    <SelectTrigger className="bg-white/20 border-yellow-500/30 text-white w-[150px] focus:ring-yellow-400/50">
+                    <SelectTrigger className="bg-white/20 border-yellow-500/30 text-white w-full sm:w-[150px] focus:ring-yellow-400/50">
                       <SelectValue placeholder="Category" />
                     </SelectTrigger>
                     <SelectContent className="bg-orange-900/90 text-white border-yellow-500/30 font-kantumruy">
-                      <SelectItem value="Default">Default</SelectItem>
-                      <SelectItem value="First Prize">First Prize</SelectItem>
-                      <SelectItem value="Second Prize">Second Prize</SelectItem>
-                      <SelectItem value="Third Prize">Third Prize</SelectItem>
-                      <SelectItem value="Special Prize">Special Prize</SelectItem>
+                      <SelectItem value="ScholarShip 50%">ScholarShip 50%</SelectItem>
+                      <SelectItem value="ScholarShip 70%">ScholarShip 70%</SelectItem>
+                      <SelectItem value="ScholarShip 100%">ScholarShip 100%</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -613,14 +617,14 @@ export default function LuckyDraw() {
                             <span className="absolute -bottom-1 left-0 right-0 h-1 bg-yellow-400/50"></span>
                           </span>
                         </div>
-                        <div className="text-4xl md:text-6xl font-bold text-white mb-6 relative">
-                          <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-100 to-yellow-300">
+                        <div className="text-xl sm:text-4xl md:text-6xl font-bold text-white mb-6 relative px-2 break-words">
+                          <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-100 to-yellow-300 break-words">
                             {winner}
                           </span>
                           <span className="absolute -bottom-2 left-0 right-0 h-2 bg-yellow-500/30 transform -rotate-1"></span>
                         </div>
                         <div className="relative inline-block">
-                          <Badge className="bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-black text-lg py-1 px-6 border-none">
+                          <Badge className="bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-black text-sm sm:text-lg py-1 px-3 sm:px-6 border-none">
                             {drawCategory} Winner!
                           </Badge>
                           <div className="absolute -inset-1 bg-yellow-400/20 blur-sm rounded-full -z-10"></div>
@@ -633,7 +637,7 @@ export default function LuckyDraw() {
                           Selecting...
                           <span className="inline-block animate-spin-slow ml-2">✨</span>
                         </div>
-                        <div className="text-3xl md:text-5xl font-bold text-white animate-pulse">
+                        <div className="text-xl sm:text-3xl md:text-5xl font-bold text-white animate-pulse break-words px-2">
                           {currentSelection}
                         </div>
                       </div>
@@ -663,11 +667,11 @@ export default function LuckyDraw() {
                         {winnerHistory.map((record, index) => (
                           <div
                             key={index}
-                            className="bg-white/10 hover:bg-white/15 p-3 rounded-md text-white border-l-4 border-yellow-500 transition-all"
+                            className="bg-white/10 hover:bg-white/15 p-2 sm:p-3 rounded-md text-white border-l-4 border-yellow-500 transition-all"
                           >
-                            <div className="flex justify-between items-start">
+                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
                               <div>
-                                <div className="font-semibold text-lg">{record.name}</div>
+                                <div className="font-semibold text-base sm:text-lg break-words">{record.name}</div>
                                 <div className="text-xs text-yellow-200/70 mt-1">{record.timestamp}</div>
                               </div>
                               <Badge className="bg-yellow-500/50 border-yellow-400/50 text-yellow-50">
@@ -686,7 +690,7 @@ export default function LuckyDraw() {
               <Button
                 onClick={startDraw}
                 disabled={availableStudents.length < 1 || isDrawing}
-                className="relative group overflow-hidden bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold px-8 py-6 text-lg border-2 border-yellow-300/50"
+                className="relative group overflow-hidden bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold px-4 sm:px-8 py-4 sm:py-6 text-base sm:text-lg border-2 border-yellow-300/50 w-full sm:w-auto"
               >
                 <span className="relative z-10">{isDrawing ? "Drawing..." : "Start Lucky Draw"}</span>
                 <span className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
@@ -696,11 +700,33 @@ export default function LuckyDraw() {
         </div>
 
         {/* Footer with Khmer New Year message */}
-        <div className="mt-8 text-center text-yellow-200 text-lg">
-          <p className="text-2xl font-medium">សូមឲ្យមានសុខភាពល្អ សិរីមង្គល និងសំណាងល្អក្នុងឆ្នាំថ្មីនេះ</p>
+        <div className="mt-6 sm:mt-8 text-center text-yellow-200 text-sm sm:text-base md:text-lg px-2">
+          <p className="text-xl sm:text-2xl font-medium">សូមឲ្យមានសុខភាពល្អ សិរីមង្គល និងសំណាងល្អក្នុងឆ្នាំថ្មីនេះ</p>
           <p className="mt-1">May you have good health, prosperity, and good luck in this New Year</p>
         </div>
       </div>
+      {/* Add custom scrollbar styles */}
+      <style jsx global>{`
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.4);
+      }
+      @media (max-width: 640px) {
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 4px;
+        }
+      }
+    `}</style>
     </div>
   )
 }
