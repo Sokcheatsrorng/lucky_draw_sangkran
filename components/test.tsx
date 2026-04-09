@@ -5,19 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { RotateCcw, Sparkles, Menu, X } from "lucide-react";
+import { RotateCcw, Trophy, Sparkles, Menu, X } from "lucide-react";
 import confetti from "canvas-confetti";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { AlertDialogTrigger } from "@radix-ui/react-alert-dialog";
 
 type WinnerRecord = {
   name: string;
@@ -28,7 +19,7 @@ type WinnerRecord = {
 const couponImages: Record<string, string> = {
   "Scholarship 50%": "/1.png",
   "Scholarship 70%": "/2.png",
-  "Scholarship 100%": "/3.png",
+  "Scholarship 100%": "/3.png"
 };
 
 export default function LuckyDrawSangkran2026() {
@@ -44,56 +35,48 @@ export default function LuckyDrawSangkran2026() {
   >("Scholarship 50%");
 
   const [textareaValue, setTextareaValue] = useState("");
-  const [showSidebar, setShowSidebar] = useState(true);
-  const [showWinnerModal, setShowWinnerModal] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(true);   // ← Sidebar toggle
 
   const drawIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const confettiCanvasRef = useRef<HTMLCanvasElement>(null);
 
-  // Audio
-  const spinAudioRef = useRef<HTMLAudioElement | null>(null);
-  const winAudioRef = useRef<HTMLAudioElement | null>(null);
-
+  // Load winner history
   useEffect(() => {
     const saved = localStorage.getItem("sangkranWinners2026");
     if (saved) setWinnerHistory(JSON.parse(saved));
-
-    spinAudioRef.current = new Audio("/spinning.mp3");
-    spinAudioRef.current.loop = true;
-    winAudioRef.current = new Audio("/win.mp3");
   }, []);
 
-    const resetWinners = () => {
-    setWinnerHistory([]);
-    localStorage.removeItem("sangkranWinners2026");
-    setWinner(null);
-  };
-
+  // Process participants from textarea
   const updateParticipants = () => {
     const names = textareaValue
       .trim()
       .split("\n")
       .map((name) => name.trim())
       .filter((name) => name.length > 0);
+
     setParticipants(names);
   };
 
+  // Filter available students
   useEffect(() => {
     let list = [...participants];
+
     if (excludePreviousWinners) {
       const previous = new Set(winnerHistory.map((w) => w.name));
       list = list.filter((name) => !previous.has(name));
     }
+
     setAvailableStudents(list);
   }, [participants, excludePreviousWinners, winnerHistory]);
 
   const triggerConfetti = () => {
     const canvas = confettiCanvasRef.current;
     if (!canvas) return;
+
     const myConfetti = confetti.create(canvas, { resize: true });
-    myConfetti({ particleCount: 200, spread: 90, origin: { y: 0.6 } });
-    setTimeout(() => myConfetti({ particleCount: 130, angle: 55, spread: 75, origin: { x: 0.1 } }), 250);
-    setTimeout(() => myConfetti({ particleCount: 130, angle: 125, spread: 75, origin: { x: 0.9 } }), 450);
+    myConfetti({ particleCount: 180, spread: 80, origin: { y: 0.6 } });
+    setTimeout(() => myConfetti({ particleCount: 120, angle: 60, spread: 70, origin: { x: 0.1 } }), 200);
+    setTimeout(() => myConfetti({ particleCount: 120, angle: 120, spread: 70, origin: { x: 0.9 } }), 400);
   };
 
   const startDraw = () => {
@@ -102,11 +85,6 @@ export default function LuckyDrawSangkran2026() {
     setIsDrawing(true);
     setWinner(null);
     setCurrentSelection("");
-
-    if (spinAudioRef.current) {
-      spinAudioRef.current.currentTime = 0;
-      spinAudioRef.current.play().catch(() => {});
-    }
 
     const totalSteps = 55;
     let counter = 0;
@@ -126,14 +104,7 @@ export default function LuckyDrawSangkran2026() {
         setWinner(selectedWinner);
         setIsDrawing(false);
 
-        if (spinAudioRef.current) spinAudioRef.current.pause();
-        if (winAudioRef.current) {
-          winAudioRef.current.currentTime = 0;
-          winAudioRef.current.play().catch(() => {});
-        }
-
         triggerConfetti();
-        setShowWinnerModal(true);   // ← Show Modal
 
         const newRecord: WinnerRecord = {
           name: selectedWinner,
@@ -154,13 +125,14 @@ export default function LuckyDrawSangkran2026() {
     }, 70);
   };
 
-  const closeWinnerModal = () => {
-    setShowWinnerModal(false);
+  const resetWinners = () => {
+    setWinnerHistory([]);
+    localStorage.removeItem("sangkranWinners2026");
     setWinner(null);
   };
 
   const handleNewDraw = () => {
-    closeWinnerModal();
+    setWinner(null);
   };
 
   const currentCouponImage = couponImages[drawCategory];
@@ -169,36 +141,70 @@ export default function LuckyDrawSangkran2026() {
     <div
       className="min-h-screen p-6 md:p-10 font-kantumruy relative"
       style={{
-        backgroundImage: `linear-gradient(to bottom right, rgba(226, 50, 38, 0.92), rgba(37, 99, 235, 0.88))`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
+          backgroundImage: `linear-gradient(to bottom right, rgb(255, 0,0, 0.8), rgba(0,0,255,0.8))`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
     >
-      <canvas ref={confettiCanvasRef} className="fixed inset-0 z-50 pointer-events-none" />
+      <canvas
+        ref={confettiCanvasRef}
+        className="fixed inset-0 z-50 pointer-events-none"
+      />
 
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className=" mb-10 mx-auto">
-          <h1 className="text-5xl md:text-6xl font-bold text-white flex items-center gap-4 text-center">
-            <Sparkles className="text-yellow-300 h-12 w-12" />
+        {/* Header with Sidebar Toggle */}
+        <div className="flex items-center justify-between mb-10">
+          <h1 className="text-5xl md:text-6xl font-bold text-white flex items-center gap-4">
+           <Sparkles className="mx-auto h-12 w-12 mb-10 text-yellow-300" />
             LuckyDraw ISTAD សង្ក្រាន្ត ២០២៦
-            <Sparkles className="text-yellow-300  h-12 w-12" />
+            <Sparkles className="mx-auto h-12 w-12 mb-10 text-yellow-300" />
           </h1>
 
-  
+          <Button
+            onClick={() => setShowSidebar(!showSidebar)}
+            variant="outline"
+            className="bg-white/20 border-white/40 text-white hover:bg-white/30 text-xl px-6 py-6 rounded-full flex items-center gap-3"
+          >
+            {showSidebar ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {showSidebar ? "លាក់ Sidebar" : "បង្ហាញ Sidebar"}
+          </Button>
         </div>
 
-        
-
-        <div className="grid grid-cols-1 lg:grid-cols-1 gap-8">
-          {/* Main Draw Area */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          {/* Main Draw Area - Takes more space when sidebar hidden */}
           <div className={`${showSidebar ? "lg:col-span-8" : "lg:col-span-12"} transition-all duration-300`}>
             <Card className="bg-white/10 backdrop-blur-2xl border-white/30 shadow-2xl">
+            
+
               <CardContent className="p-12 min-h-[620px] flex flex-col items-center justify-center">
-                {isDrawing ? (
+                {winner ? (
+                  <div className="text-center w-full">
+                    <p className="text-yellow-300 text-4xl mb-6">🎉 សូមអបអរសាទរ 🎉</p>
+                    <p className="text-6xl md:text-7xl font-bold text-white mb-12 break-words leading-tight">
+                      {winner}
+                    </p>
+
+                    <div className="mx-auto max-w-lg shadow-2xl rounded-3xl overflow-hidden border-8 border-white/60">
+                      <img
+                        src={currentCouponImage}
+                        alt={`${drawCategory} Coupon`}
+                        className="w-full h-auto"
+                      />
+                    </div>
+
+                    {/* <p className="mt-10 text-3xl text-white/90">{drawCategory} អ្នកឈ្នះ</p> */}
+
+                    {/* <Button
+                      onClick={handleNewDraw}
+                      className="mt-12 px-12 py-7 text-2xl bg-white/20 hover:bg-white/30 border border-white/50 text-white rounded-full"
+                    >
+                      ដកឆ្នោតម្តងទៀត
+                    </Button> */}
+                  </div>
+                ) : isDrawing ? (
                   <div className="text-center">
                     <div className="text-yellow-300 text-4xl mb-10 animate-pulse">
-                      កំពុងផ្សងសំណាង...
+                      កំពុងដកសំណាង...
                     </div>
                     <div className="text-6xl md:text-7xl font-bold text-white min-h-[200px] flex items-center justify-center px-6 break-words text-center leading-tight">
                       {currentSelection || "..."}
@@ -225,54 +231,7 @@ export default function LuckyDrawSangkran2026() {
             </Card>
           </div>
 
-          {/* Sidebar remains the same - paste your sidebar cards here */}
-          {showSidebar && (
-            <div className="lg:col-span-4 space-y-8 transition-all duration-300">
-              {/* Your Participants, Category, and History Cards go here */}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* ====================== WINNER MODAL ====================== */}
-      {showWinnerModal && winner && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-          <div className="bg-white/10 backdrop-blur-2xl border border-white/40 rounded-3xl max-w-5xl w-full overflow-hidden shadow-2xl">
-            <Button
-                  onClick={closeWinnerModal}
-                  variant="outline"
-                  className="border p-8 text-4xl bg-transparent border-none fixed right-0  text-red-500 rounded-2xl"
-                >
-                 បិទ
-                </Button>
-            <div className="p-10 md:p-14 text-center">
-              <p className="text-yellow-300 text-5xl md:text-6xl font-bold mb-8 drop-shadow-lg">
-                🎉 សូមអបអរសាទរ 🎉
-              </p>
-
-              {/* Big Winner Name */}
-              <p className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-12 break-words leading-tight drop-shadow-2xl">
-                {winner}
-              </p>
-
-              {/* Big Coupon Image */}
-              <div className="mx-auto max-w-lg md:max-w-xl shadow-2xl rounded-3xl overflow-hidden border-8 border-yellow-300/80 mb-10">
-                <img
-                  src={currentCouponImage}
-                  alt={`${drawCategory} Coupon`}
-                  className="w-full h-auto"
-                />
-              </div>
-
-              <p className="text-4xl text-yellow-200 font-medium mb-10">
-                {drawCategory} អ្នកឈ្នះ
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-
-       {/* Sidebar - Can be hidden */}
+          {/* Sidebar - Can be hidden */}
           {showSidebar && (
             <div className="lg:col-span-4 space-y-8 transition-all duration-300">
               {/* Participants Input */}
@@ -372,6 +331,8 @@ export default function LuckyDrawSangkran2026() {
               </Card>
             </div>
           )}
+        </div>
+      </div>
     </div>
   );
 }

@@ -7,8 +7,7 @@ const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
   title: "ISTAD SANGKRAN LUCKY DRAW",
-  description: "A lucky draw application for graduation students",
-    generator: 'v0.dev'
+  description: "A lucky draw application for graduation students"
 }
 
 export default function RootLayout({
