@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { DrawDisplay } from "./DrawDisplay"
 import { DrawButton } from "./DrawButton"
 import { DrawHistory } from "./DrawHistory"
-import { WinnerRecord } from "@/hooks/useWinnerHistory"
+import type { WinnerRecord } from "@/hooks/useWinnerHistory"
 
 interface ResultsPanelProps {
   students: string[]
