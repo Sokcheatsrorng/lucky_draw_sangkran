@@ -77,9 +77,10 @@ export default function LuckyDraw() {
             excludePreviousWinners={studentFiltering.excludePreviousWinners}
             onExcludeWinnersChange={studentFiltering.setExcludePreviousWinners}
             uniqueSubjects={studentFiltering.uniqueSubjects}
-            currentSelection={draw.currentSelection}
             winner={draw.winner}
             isDrawing={draw.isDrawing}
+            rotation={draw.rotation}
+            winnerIndex={draw.winnerIndex}
             onDraw={handleStartDraw}
             history={history.winnerHistory}
             onResetHistory={handleResetWinners}

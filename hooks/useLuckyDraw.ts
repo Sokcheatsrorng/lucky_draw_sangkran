@@ -1,14 +1,16 @@
 import { useState, useRef, useCallback } from "react"
 
-const DRAW_ANIMATION_SPEED = 50 // ms between selections
-const TOTAL_SELECTIONS = 30 // number of random selections before final winner
+const SPIN_DURATION = 4000 // Duration of spin animation in ms
+const BASE_SPIN_SPEED = 15 // Degrees per frame
 
 export function useLuckyDraw() {
   const [winner, setWinner] = useState<string | null>(null)
   const [isDrawing, setIsDrawing] = useState(false)
-  const [currentSelection, setCurrentSelection] = useState<string | null>(null)
+  const [rotation, setRotation] = useState(0)
+  const [winnerIndex, setWinnerIndex] = useState<number | null>(null)
 
   const drawIntervalRef = useRef<NodeJS.Timeout | null>(null)
+  const startTimeRef = useRef<number>(0)
 
   const startDraw = useCallback(
     (availableStudents: string[], onDrawComplete: (winner: string) => void) => {
@@ -16,29 +18,58 @@ export function useLuckyDraw() {
 
       setIsDrawing(true)
       setWinner(null)
-      let selectionCount = 0
+      setRotation(0)
 
-      // Animate through random selections
+      // Select random winner (but don't reveal yet)
+      const selectedWinnerIndex = Math.floor(Math.random() * availableStudents.length)
+      const selectedWinner = availableStudents[selectedWinnerIndex]
+
+      startTimeRef.current = Date.now()
+      let lastRotation = 0
+
+      // Animate spinning wheel
       drawIntervalRef.current = setInterval(() => {
-        const randomIndex = Math.floor(Math.random() * availableStudents.length)
-        setCurrentSelection(availableStudents[randomIndex])
-        selectionCount++
+        const elapsed = Date.now() - startTimeRef.current
+        const progress = Math.min(elapsed / SPIN_DURATION, 1)
 
-        // Stop after predetermined number of selections
-        if (selectionCount >= TOTAL_SELECTIONS) {
+        // Easing out cubic for deceleration effect
+        const easeOutCubic = 1 - Math.pow(1 - progress, 3)
+
+        // Calculate rotation: spin multiple times then slow down to winner
+        const totalSpins = 5 // Number of full rotations
+        const segmentAngle = 360 / availableStudents.length
+        const winnerRotation = selectedWinnerIndex * segmentAngle
+
+        // Start rotation from a random offset
+        const randomOffset = Math.random() * 360
+        const targetRotation = randomOffset + totalSpins * 360 + winnerRotation
+
+        const currentRotation = targetRotation * easeOutCubic
+        setRotation(currentRotation % 360)
+        lastRotation = currentRotation
+
+        // Animation complete
+        if (progress === 1) {
           if (drawIntervalRef.current) {
             clearInterval(drawIntervalRef.current)
           }
 
-          // Select final winner
-          const winnerIndex = Math.floor(Math.random() * availableStudents.length)
-          const selectedWinner = availableStudents[winnerIndex]
-          setCurrentSelection(null)
-          setWinner(selectedWinner)
+          // Calculate final rotation and winner
+          const finalRotation = (lastRotation % 360 + 360) % 360
+          const normalizedWinnerRotation = (winnerRotation % 360 + 360) % 360
+
+          // Find which segment points to the top (pointer position)
+          const pointerPosition = 0 // Top of wheel
+          const closestSegmentIndex = Math.round(
+            ((pointerPosition - (finalRotation % 360) + 360) % 360) / segmentAngle
+          ) % availableStudents.length
+
+          setWinnerIndex(closestSegmentIndex)
+          setWinner(availableStudents[selectedWinnerIndex])
           setIsDrawing(false)
           onDrawComplete(selectedWinner)
         }
-      }, DRAW_ANIMATION_SPEED)
+      }, 16) // ~60fps
     },
     [isDrawing]
   )
@@ -48,14 +79,16 @@ export function useLuckyDraw() {
       clearInterval(drawIntervalRef.current)
     }
     setWinner(null)
-    setCurrentSelection(null)
+    setRotation(0)
+    setWinnerIndex(null)
     setIsDrawing(false)
   }, [])
 
   return {
     winner,
     isDrawing,
-    currentSelection,
+    rotation,
+    winnerIndex,
     startDraw,
     resetDraw,
   }

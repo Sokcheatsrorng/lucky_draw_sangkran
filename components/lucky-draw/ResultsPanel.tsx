@@ -6,9 +6,11 @@ import { DrawHistory } from "./DrawHistory"
 import { WinnerRecord } from "@/hooks/useWinnerHistory"
 
 interface ResultsPanelProps {
-  currentSelection: string | null
+  students: string[]
   winner: string | null
   isDrawing: boolean
+  rotation: number
+  winnerIndex: number | null
   availableCount: number
   onDraw: () => void
   history: WinnerRecord[]
@@ -16,9 +18,11 @@ interface ResultsPanelProps {
 }
 
 export function ResultsPanel({
-  currentSelection,
+  students,
   winner,
   isDrawing,
+  rotation,
+  winnerIndex,
   availableCount,
   onDraw,
   history,
@@ -36,7 +40,13 @@ export function ResultsPanel({
       </TabsList>
 
       <TabsContent value="draw" className="flex-1 flex flex-col gap-6 mt-4">
-        <DrawDisplay currentSelection={currentSelection} winner={winner} isDrawing={isDrawing} />
+        <DrawDisplay 
+          students={students}
+          winner={winner} 
+          isDrawing={isDrawing}
+          rotation={rotation}
+          winnerIndex={winnerIndex}
+        />
         <DrawButton
           onClick={onDraw}
           disabled={isDrawing}

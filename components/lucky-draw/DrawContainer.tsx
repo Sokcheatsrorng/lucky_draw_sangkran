@@ -18,9 +18,10 @@ interface DrawContainerProps {
   uniqueSubjects: string[]
 
   // Draw state
-  currentSelection: string | null
   winner: string | null
   isDrawing: boolean
+  rotation: number
+  winnerIndex: number | null
   onDraw: () => void
 
   // History
@@ -39,9 +40,10 @@ export function DrawContainer({
   excludePreviousWinners,
   onExcludeWinnersChange,
   uniqueSubjects,
-  currentSelection,
   winner,
   isDrawing,
+  rotation,
+  winnerIndex,
   onDraw,
   history,
   onResetHistory,
@@ -72,9 +74,11 @@ export function DrawContainer({
       {/* Right Panel - Results & Draw */}
       <div className="lg:col-span-2 overflow-hidden">
         <ResultsPanel
-          currentSelection={currentSelection}
+          students={filteredStudents}
           winner={winner}
           isDrawing={isDrawing}
+          rotation={rotation}
+          winnerIndex={winnerIndex}
           availableCount={availableStudents.length}
           onDraw={onDraw}
           history={history}

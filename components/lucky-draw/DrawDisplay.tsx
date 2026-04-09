@@ -1,67 +1,72 @@
+'use client'
+
 import React from "react"
+import { SpinningWheel } from "./SpinningWheel"
 
 interface DrawDisplayProps {
-  currentSelection: string | null
+  students: string[]
   winner: string | null
   isDrawing: boolean
+  rotation: number
+  winnerIndex: number | null
 }
 
-export function DrawDisplay({ currentSelection, winner, isDrawing }: DrawDisplayProps) {
+export function DrawDisplay({ 
+  students, 
+  winner, 
+  isDrawing, 
+  rotation, 
+  winnerIndex 
+}: DrawDisplayProps) {
   return (
-    <div className="relative">
-      {/* Display Card */}
-      <div className="relative backdrop-blur-md bg-white/[0.05] border border-white/[0.1] rounded-2xl p-12 shadow-2xl overflow-hidden">
-        {/* Gradient background animation */}
-        <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 via-transparent to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+    <div className="relative w-full">
+      {/* Wheel Section */}
+      <div className="relative backdrop-blur-md bg-white/[0.05] border border-white/[0.1] rounded-3xl p-8 shadow-2xl overflow-visible">
+        
+        {/* Spinning Wheel */}
+        <div className="flex items-center justify-center">
+          <SpinningWheel
+            students={students}
+            isSpinning={isDrawing}
+            rotation={rotation}
+            winnerIndex={winnerIndex}
+          />
+        </div>
 
-        {/* Content */}
-        <div className="relative z-10 text-center min-h-[280px] flex flex-col items-center justify-center">
+        {/* Winner Display */}
+        <div className="mt-8 text-center">
           {winner ? (
-            <div className="space-y-6 animate-fadeIn">
+            <div className="space-y-4 animate-fadeIn">
               <div className="text-yellow-400 text-sm font-semibold tracking-widest uppercase">
                 🎉 WINNER 🎉
               </div>
-              <div className="text-5xl md:text-6xl font-bold text-white break-words">
+              <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-white break-words px-4">
                 {winner}
               </div>
               <div className="h-1 w-24 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 rounded-full mx-auto"></div>
+              <div className="text-yellow-200 text-sm mt-4">
+                Congratulations! 🎊
+              </div>
             </div>
           ) : isDrawing ? (
-            <div className="space-y-6 animate-fadeIn">
+            <div className="space-y-4">
               <div className="text-yellow-400 text-sm font-semibold tracking-widest uppercase opacity-75">
-                Drawing...
+                Spinning the wheel...
               </div>
-              <div className="text-4xl md:text-5xl font-bold text-white/80 min-h-16 flex items-center justify-center">
-                {currentSelection}
-              </div>
-              <div className="flex justify-center gap-2 mt-8">
-                <div className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce" style={{ animationDelay: "0s" }}></div>
-                <div className="w-2 h-2 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
-                <div className="w-2 h-2 bg-red-500 rounded-full animate-bounce" style={{ animationDelay: "0.4s" }}></div>
-              </div>
+              <div className="h-2 w-32 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 rounded-full mx-auto animate-pulse"></div>
             </div>
           ) : (
-            <div className="space-y-4 text-center">
-              <div className="text-white/50 text-lg font-light">
-                Press the button below to start
+            <div className="space-y-3 text-center">
+              <div className="text-white/60 text-base font-light">
+                Ready to find the winner?
               </div>
-              <div className="text-white/30 text-sm">
-                Select filters to narrow down participants
+              <div className="text-white/40 text-sm">
+                Click "Start Lucky Draw" to spin the wheel
               </div>
             </div>
           )}
         </div>
       </div>
-
-      {/* Decorative corners */}
-      {winner && (
-        <>
-          <div className="absolute -top-1 -left-1 w-8 h-8 border-t-2 border-l-2 border-yellow-400 rounded-tl-lg"></div>
-          <div className="absolute -top-1 -right-1 w-8 h-8 border-t-2 border-r-2 border-yellow-400 rounded-tr-lg"></div>
-          <div className="absolute -bottom-1 -left-1 w-8 h-8 border-b-2 border-l-2 border-yellow-400 rounded-bl-lg"></div>
-          <div className="absolute -bottom-1 -right-1 w-8 h-8 border-b-2 border-r-2 border-yellow-400 rounded-br-lg"></div>
-        </>
-      )}
     </div>
   )
 }
