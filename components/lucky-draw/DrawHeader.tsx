@@ -5,17 +5,32 @@ interface DrawHeaderProps {
   subtitle?: string
 }
 
-export function DrawHeader({ title = "Lucky Draw", subtitle = "ISTAD Sangkran 2024" }: DrawHeaderProps) {
+export function DrawHeader({ title = "ISTAD Sangkran", subtitle = "Scholarship Lucky Draw 2024" }: DrawHeaderProps) {
   return (
-    <div className="text-center mb-12 animate-fadeIn">
-      <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 bg-clip-text text-transparent mb-3">
-        {title}
+    <div className="text-center mb-16 animate-fadeIn">
+      {/* Premium badge */}
+      <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full backdrop-blur-sm">
+        <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
+        <span className="text-xs font-semibold text-yellow-400 tracking-widest uppercase">Premium Event</span>
+      </div>
+
+      {/* Main title with gradient */}
+      <h1 className="text-6xl md:text-7xl lg:text-8xl font-black mb-4 leading-tight">
+        <span className="bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-300 bg-clip-text text-transparent">
+          {title}
+        </span>
       </h1>
-      <p className="text-xl text-white/70 font-light tracking-wide">{subtitle}</p>
-      <div className="mt-6 flex justify-center gap-2">
-        <div className="w-12 h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full"></div>
-        <div className="w-12 h-1 bg-gradient-to-r from-red-500 to-transparent rounded-full"></div>
-        <div className="w-12 h-1 bg-gradient-to-r from-teal-400 to-transparent rounded-full"></div>
+
+      {/* Subtitle */}
+      <p className="text-lg md:text-xl text-white/60 font-light tracking-wide mb-8">
+        {subtitle}
+      </p>
+
+      {/* Decorative line */}
+      <div className="flex justify-center items-center gap-4">
+        <div className="w-16 h-px bg-gradient-to-r from-transparent via-yellow-500/50 to-transparent"></div>
+        <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+        <div className="w-16 h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"></div>
       </div>
     </div>
   )

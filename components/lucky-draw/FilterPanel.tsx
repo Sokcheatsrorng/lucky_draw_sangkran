@@ -26,28 +26,28 @@ export function FilterPanel({
 }: FilterPanelProps) {
   return (
     <Tabs defaultValue="filters" className="w-full">
-      <TabsList className="grid w-full grid-cols-2 bg-white/[0.05] border border-white/[0.1]">
-        <TabsTrigger value="filters" className="text-white/70">
+      <TabsList className="grid w-full grid-cols-2 bg-gradient-to-r from-white/5 to-white/[0.02] border border-white/[0.08] rounded-xl p-1">
+        <TabsTrigger value="filters" className="text-white/60 data-[state=active]:text-yellow-400 data-[state=active]:bg-white/10 rounded-lg">
           Filters
         </TabsTrigger>
-        <TabsTrigger value="info" className="text-white/70">
+        <TabsTrigger value="info" className="text-white/60 data-[state=active]:text-yellow-400 data-[state=active]:bg-white/10 rounded-lg">
           Info
         </TabsTrigger>
       </TabsList>
 
-      <TabsContent value="filters" className="space-y-6 mt-4">
+      <TabsContent value="filters" className="space-y-6 mt-6">
         {/* Gender Filter */}
-        <div className="space-y-3">
-          <label className="text-sm font-semibold text-white/90 block">Gender</label>
-          <div className="grid grid-cols-2 gap-3">
+        <div className="space-y-4">
+          <label className="text-sm font-bold text-white/80 block tracking-wide uppercase">Gender Filter</label>
+          <div className="grid grid-cols-3 gap-2">
             {["all", "Male", "Female"].map((option) => (
               <button
                 key={option}
                 onClick={() => onFilterGenderChange(option)}
-                className={`py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200 ${
+                className={`py-3 px-3 rounded-xl text-sm font-semibold transition-all duration-300 border ${
                   filterGender === option
-                    ? "bg-yellow-500/30 border border-yellow-400/50 text-yellow-300"
-                    : "bg-white/[0.05] border border-white/10 text-white/70 hover:bg-white/10"
+                    ? "bg-yellow-500/20 border-yellow-500/50 text-yellow-300 shadow-lg shadow-yellow-500/20"
+                    : "bg-white/[0.03] border-white/10 text-white/60 hover:bg-white/[0.08] hover:border-white/20"
                 }`}
               >
                 {option === "all" ? "All" : option}

@@ -55,12 +55,19 @@ export default function LuckyDraw() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white overflow-x-hidden">
+    <div className="min-h-screen bg-black text-white overflow-x-hidden">
+      {/* Premium background with subtle gradients */}
+      <div className="fixed inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-black"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl opacity-20"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl opacity-20"></div>
+      </div>
+
       {/* Confetti Canvas */}
       <canvas ref={confettiCanvasRef} className="fixed inset-0 pointer-events-none" />
 
       {/* Main Content */}
-      <div className="relative z-10 px-4 md:px-6 lg:px-8 py-8 md:py-12">
+      <div className="relative z-10 px-4 md:px-6 lg:px-8 py-12 md:py-16">
         {/* Header */}
         <DrawHeader />
 

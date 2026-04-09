@@ -6,9 +6,11 @@ import { ThemeProvider } from "@/components/theme-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
-  title: "ISTAD SANGKRAN LUCKY DRAW",
-  description: "A lucky draw application for graduation students",
-    generator: 'v0.dev'
+  title: "ISTAD Sangkran Scholarship Lucky Draw | Premium Event Experience",
+  description: "Experience the ultimate scholarship lucky draw event. Spin the wheel and discover your fortune with ISTAD's professional event platform.",
+  generator: 'v0.dev',
+  keywords: "ISTAD, Sangkran, Lucky Draw, Scholarship, Event, Premium",
+  authors: [{ name: "ISTAD" }],
 }
 
 export default function RootLayout({

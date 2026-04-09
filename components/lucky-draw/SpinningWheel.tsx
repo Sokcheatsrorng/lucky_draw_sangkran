@@ -18,14 +18,14 @@ export function SpinningWheel({
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   const COLORS = [
-    '#F59E0B', // Gold
-    '#DC2626', // Red
-    '#14B8A6', // Teal
-    '#8B5CF6', // Purple
-    '#EC4899', // Pink
+    '#FFFF00', // Vibrant Gold
+    '#A855F7', // Luxe Purple
+    '#06B6D4', // Bright Cyan
+    '#F97316', // Modern Orange
+    '#EC4899', // Hot Pink
+    '#8B5CF6', // Deep Purple
     '#06B6D4', // Cyan
-    '#EF8139', // Orange
-    '#6366F1', // Indigo
+    '#FFFD38', // Bright Yellow
   ]
 
   // Draw the spinning wheel

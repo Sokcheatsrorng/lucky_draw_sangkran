@@ -4,69 +4,69 @@
 
 @layer base {
   :root {
-    /* Modern Sangkran Theme - Dark Mode First */
-    --background: 217.2 32.6% 8.6%; /* Deep dark base #0F172A */
-    --foreground: 210 40% 98%; /* Bright white text */
+    /* Premium Dark Theme - Professional Event Design */
+    --background: 0 0% 2%; /* Pure black background */
+    --foreground: 0 0% 98%; /* Off-white text */
 
-    --card: 217.2 32.6% 11.4%; /* Card background #1E293B */
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 8%; /* Dark cards */
+    --card-foreground: 0 0% 98%;
 
-    --popover: 217.2 32.6% 11.4%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 98%;
 
-    /* Modern Sangkran Colors */
-    --primary: 45 90% 57%; /* Gold #F59E0B */
-    --primary-foreground: 217.2 32.6% 8.6%;
+    /* Professional Gradient Colors */
+    --primary: 55 100% 50%; /* Vibrant Gold */
+    --primary-foreground: 0 0% 2%;
 
-    --secondary: 0 92% 51%; /* Red #DC2626 */
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 280 92% 58%; /* Luxe Purple */
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 217.2 32.6% 22%; /* Muted slate */
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 0 0% 35%; /* Medium gray */
+    --muted-foreground: 0 0% 70%;
 
-    --accent: 174 100% 42%; /* Teal/Cyan #14B8A6 */
-    --accent-foreground: 217.2 32.6% 8.6%;
+    --accent: 199 89% 48%; /* Bright Cyan */
+    --accent-foreground: 0 0% 2%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 217.2 32.6% 20%; /* Subtle borders */
-    --input: 217.2 32.6% 15%;
-    --ring: 45 90% 57%;
+    --border: 0 0% 15%; /* Subtle dividers */
+    --input: 0 0% 12%;
+    --ring: 55 100% 50%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
   }
 
   .dark {
-    --background: 217.2 32.6% 8.6%;
-    --foreground: 210 40% 98%;
+    --background: 0 0% 2%;
+    --foreground: 0 0% 98%;
 
-    --card: 217.2 32.6% 11.4%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 217.2 32.6% 11.4%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 45 90% 57%;
-    --primary-foreground: 217.2 32.6% 8.6%;
+    --primary: 55 100% 50%;
+    --primary-foreground: 0 0% 2%;
 
-    --secondary: 0 92% 51%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 280 92% 58%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 217.2 32.6% 22%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 0 0% 35%;
+    --muted-foreground: 0 0% 70%;
 
-    --accent: 174 100% 42%;
-    --accent-foreground: 217.2 32.6% 8.6%;
+    --accent: 199 89% 48%;
+    --accent-foreground: 0 0% 2%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 217.2 32.6% 20%;
-    --input: 217.2 32.6% 15%;
-    --ring: 45 90% 57%;
+    --border: 0 0% 15%;
+    --input: 0 0% 12%;
+    --ring: 55 100% 50%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
   }
 }
 
