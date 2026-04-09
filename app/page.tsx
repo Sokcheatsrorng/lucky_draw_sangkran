@@ -1,8 +1,10 @@
 "use client"
 
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
 import { DrawHeader } from "@/components/lucky-draw/DrawHeader"
 import { DrawContainer } from "@/components/lucky-draw/DrawContainer"
+import { CustomInputPanel } from "@/components/lucky-draw/CustomInputPanel"
+import { ModeToggle, type DrawMode } from "@/components/lucky-draw/ModeToggle"
 import { AudioController } from "@/components/lucky-draw/AudioController"
 import { useStudentFiltering } from "@/hooks/useStudentFiltering"
 import { useLuckyDraw } from "@/hooks/useLuckyDraw"
@@ -13,6 +15,8 @@ import { studentData } from "@/students"
 import { getAvailableStudents } from "@/lib/draw-utils"
 
 export default function LuckyDraw() {
+  const [mode, setMode] = useState<DrawMode>('database')
+
   // Initialize all custom hooks
   const studentFiltering = useStudentFiltering()
   const draw = useLuckyDraw()
@@ -71,9 +75,15 @@ export default function LuckyDraw() {
         {/* Header */}
         <DrawHeader />
 
+        {/* Mode Toggle */}
+        <div className="max-w-7xl mx-auto flex justify-center mb-12">
+          <ModeToggle currentMode={mode} onModeChange={setMode} />
+        </div>
+
         {/* Main Container */}
         <div className="max-w-7xl mx-auto">
-          <DrawContainer
+          {mode === 'database' ? (
+            <DrawContainer
             allStudents={allStudentNames}
             filteredStudents={studentFiltering.filteredStudents}
             winners={history.getWinnerNames()}
@@ -91,7 +101,10 @@ export default function LuckyDraw() {
             onDraw={handleStartDraw}
             history={history.winnerHistory}
             onResetHistory={handleResetWinners}
-          />
+            />
+          ) : (
+            <CustomInputPanel />
+          )}
         </div>
 
         {/* Footer */}
