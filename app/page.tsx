@@ -26,9 +26,14 @@ type WinnerRecord = {
 };
 
 const couponImages: Record<string, string> = {
-  "Scholarship 50%": "/1.png",
-  "Scholarship 70%": "/2.png",
-  "Scholarship 100%": "/3.png",
+  "Voucher 80$": "/80.png",
+  "Voucher 100$": "/100.png",
+  "Voucher 130$": "/130.png",
+  "Voucher 150$": "/150.png",
+  "Voucher 200$": "/200.png",
+  "Voucher 250$": "/250.png",
+  "Voucher 300$": "/300.png",
+  "Voucher 350$": "/350.png"
 };
 
 export default function LuckyDrawSangkran2026() {
@@ -40,8 +45,8 @@ export default function LuckyDrawSangkran2026() {
   const [excludePreviousWinners, setExcludePreviousWinners] = useState(true);
   const [winnerHistory, setWinnerHistory] = useState<WinnerRecord[]>([]);
   const [drawCategory, setDrawCategory] = useState<
-    "Scholarship 50%" | "Scholarship 70%" | "Scholarship 100%"
-  >("Scholarship 50%");
+    "Voucher 80$" | "Voucher 100$" | "Voucher 130$" | "Voucher 150$" | "Voucher 200$" | "Voucher 250$" | "Voucher 300$" | "Voucher 350$"
+  >("Voucher 80$");
 
   const [textareaValue, setTextareaValue] = useState("");
   const [showSidebar, setShowSidebar] = useState(true);
@@ -63,7 +68,7 @@ export default function LuckyDrawSangkran2026() {
     winAudioRef.current = new Audio("/win.mp3");
   }, []);
 
-    const resetWinners = () => {
+  const resetWinners = () => {
     setWinnerHistory([]);
     localStorage.removeItem("sangkranWinners2026");
     setWinner(null);
@@ -105,7 +110,7 @@ export default function LuckyDrawSangkran2026() {
 
     if (spinAudioRef.current) {
       spinAudioRef.current.currentTime = 0;
-      spinAudioRef.current.play().catch(() => {});
+      spinAudioRef.current.play().catch(() => { });
     }
 
     const totalSteps = 55;
@@ -129,7 +134,7 @@ export default function LuckyDrawSangkran2026() {
         if (spinAudioRef.current) spinAudioRef.current.pause();
         if (winAudioRef.current) {
           winAudioRef.current.currentTime = 0;
-          winAudioRef.current.play().catch(() => {});
+          winAudioRef.current.play().catch(() => { });
         }
 
         triggerConfetti();
@@ -184,11 +189,7 @@ export default function LuckyDrawSangkran2026() {
             LuckyDraw ISTAD សង្ក្រាន្ត ២០២៦
             <Sparkles className="text-yellow-300  h-12 w-12" />
           </h1>
-
-  
         </div>
-
-        
 
         <div className="grid grid-cols-1 lg:grid-cols-1 gap-8">
           {/* Main Draw Area */}
@@ -239,12 +240,12 @@ export default function LuckyDrawSangkran2026() {
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
           <div className="bg-white/10 backdrop-blur-2xl border border-white/40 rounded-3xl max-w-5xl w-full overflow-hidden shadow-2xl">
             <Button
-                  onClick={closeWinnerModal}
-                  variant="outline"
-                  className="border p-8 text-4xl bg-transparent border-none fixed right-0  text-red-500 rounded-2xl"
-                >
-                 បិទ
-                </Button>
+              onClick={closeWinnerModal}
+              variant="outline"
+              className="border p-8 text-4xl bg-transparent border-none fixed right-0  text-red-500 rounded-2xl"
+            >
+              បិទ
+            </Button>
             <div className="p-10 md:p-14 text-center">
               <p className="text-yellow-300 text-5xl md:text-6xl font-bold mb-8 drop-shadow-lg">
                 🎉 សូមអបអរសាទរ 🎉
@@ -256,7 +257,7 @@ export default function LuckyDrawSangkran2026() {
               </p>
 
               {/* Big Coupon Image */}
-              <div className="mx-auto max-w-lg md:max-w-xl shadow-2xl rounded-3xl overflow-hidden border-8 border-yellow-300/80 mb-10">
+              <div className="mx-auto max-w-full md:max-w-4xl shadow-2xl rounded-3xl overflow-hidden border-8 border-yellow-300/80 mb-10">
                 <img
                   src={currentCouponImage}
                   alt={`${drawCategory} Coupon`}
@@ -265,113 +266,119 @@ export default function LuckyDrawSangkran2026() {
               </div>
 
               <p className="text-4xl text-yellow-200 font-medium mb-10">
-                {drawCategory} អ្នកឈ្នះ
+                អ្នកឈ្នះ {drawCategory}
               </p>
             </div>
           </div>
         </div>
       )}
 
-       {/* Sidebar - Can be hidden */}
-          {showSidebar && (
-            <div className="lg:col-span-4 space-y-8 transition-all duration-300">
-              {/* Participants Input */}
-              <Card className="bg-white/10 backdrop-blur-2xl border-white/30">
-                <CardHeader>
-                  <CardTitle className="text-white text-2xl">បញ្ចូលឈ្មោះអ្នកចូលរួម</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <textarea
-                    value={textareaValue}
-                    onChange={(e) => setTextareaValue(e.target.value)}
-                    onBlur={updateParticipants}
-                    placeholder="បញ្ចូលឈ្មោះអ្នកចូលរួម..."
-                    className="w-full h-64 p-5 bg-white/10 border border-white/40 rounded-2xl text-white text-lg resize-y focus:outline-none focus:border-yellow-400 font-kantumruy"
-                  />
-                  <Button onClick={updateParticipants} className="w-full py-6 text-xl text-black">
-                    បញ្ចូលឈ្មោះ
+      {/* Sidebar - Can be hidden */}
+      {showSidebar && (
+        <div className="lg:col-span-4 space-y-8 transition-all duration-300">
+          {/* Participants Input */}
+          <Card className="bg-white/10 backdrop-blur-2xl border-white/30">
+            <CardHeader>
+              <CardTitle className="text-white text-2xl">បញ្ចូលឈ្មោះអ្នកចូលរួម</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <textarea
+                value={textareaValue}
+                onChange={(e) => setTextareaValue(e.target.value)}
+                onBlur={updateParticipants}
+                placeholder="បញ្ចូលឈ្មោះអ្នកចូលរួម..."
+                className="w-full h-64 p-5 bg-white/10 border border-white/40 rounded-2xl text-white text-lg resize-y focus:outline-none focus:border-yellow-400 font-kantumruy"
+              />
+              <Button onClick={updateParticipants} className="w-full py-6 text-xl text-black">
+                បញ្ចូលឈ្មោះ
+              </Button>
+
+              <div className="text-white pt-4 text-xl">
+                ចំនួនអ្នកចូលរួមសរុប: <span className="text-yellow-300 font-bold text-3xl">{participants.length}</span>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Category Selection */}
+          <Card className="bg-white/10 backdrop-blur-2xl border-white/30">
+            <CardHeader>
+              <CardTitle className="text-white">ជ្រើសរើសប្រភេទរង្វាន់</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <select
+                value={drawCategory}
+                onChange={(e) => setDrawCategory(e.target.value as any)}
+                className="w-full p-5 bg-white/10 border border-white/40 rounded-2xl text-black text-2xl focus:outline-none focus:border-yellow-400"
+              >
+                <option value="Voucher 80$">Voucher 80$</option>
+                <option value="Voucher 100$">Voucher 100$</option>
+                <option value="Voucher 130$">Voucher 130$</option>
+                <option value="Voucher 150$">Voucher 150$</option>
+                <option value="Voucher 200$">Voucher 200$</option>
+                <option value="Voucher 250$">Voucher 250$</option>
+                <option value="Voucher 300$">Voucher 300$</option>
+                <option value="Voucher 350$">Voucher 350$</option>
+
+
+              </select>
+
+              <div className="flex items-center justify-between py-4">
+                <Label className="text-white text-xl">មិនឱ្យឈ្មោះដែលឈ្នះរួច</Label>
+                <Switch
+                  checked={excludePreviousWinners}
+                  onCheckedChange={setExcludePreviousWinners}
+                />
+              </div>
+
+              <div className="pt-6 text-white border-t border-white/20 text-xl">
+                អាចដកបាន៖ <span className="text-yellow-300 font-bold text-4xl">{availableStudents.length}</span>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Winner History */}
+          <Card className="bg-white/10 backdrop-blur-2xl border-white/30">
+            <CardHeader className="flex justify-between items-center">
+              <CardTitle className="text-white">ប្រវត្តិអ្នកឈ្នះ</CardTitle>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="ghost" size="sm" className="text-red-300 hover:text-red-400">
+                    <RotateCcw className="h-6 w-6" />
                   </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent className="bg-red-950 border-red-700 text-white">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>កំណត់ឡើងវិញទាំងអស់?</AlertDialogTitle>
+                    <AlertDialogDescription>សកម្មភាពនេះមិនអាចត្រឡប់វិញបានទេ។</AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>បោះបង់</AlertDialogCancel>
+                    <AlertDialogAction onClick={resetWinners} className="bg-red-600">
+                      កំណត់ឡើងវិញ
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </CardHeader>
 
-                  <div className="text-white pt-4 text-xl">
-                    ចំនួនអ្នកចូលរួមសរុប: <span className="text-yellow-300 font-bold text-3xl">{participants.length}</span>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Category Selection */}
-              <Card className="bg-white/10 backdrop-blur-2xl border-white/30">
-                <CardHeader>
-                  <CardTitle className="text-white">ជ្រើសរើសប្រភេទរង្វាន់</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <select
-                    value={drawCategory}
-                    onChange={(e) => setDrawCategory(e.target.value as any)}
-                    className="w-full p-5 bg-white/10 border border-white/40 rounded-2xl text-black text-2xl focus:outline-none focus:border-yellow-400"
-                  >
-                    <option value="Scholarship 50%">អាហារូបករណ៍ ៥០%</option>
-                    <option value="Scholarship 70%">អាហារូបករណ៍ ៧០%</option>
-                    <option value="Scholarship 100%">អាហារូបករណ៍ ១០០%</option>
-                  
-                  </select>
-
-                  <div className="flex items-center justify-between py-4">
-                    <Label className="text-white text-xl">មិនឱ្យឈ្មោះដែលឈ្នះរួច</Label>
-                    <Switch
-                      checked={excludePreviousWinners}
-                      onCheckedChange={setExcludePreviousWinners}
-                    />
-                  </div>
-
-                  <div className="pt-6 text-white border-t border-white/20 text-xl">
-                    អាចដកបាន៖ <span className="text-yellow-300 font-bold text-4xl">{availableStudents.length}</span>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Winner History */}
-              <Card className="bg-white/10 backdrop-blur-2xl border-white/30">
-                <CardHeader className="flex justify-between items-center">
-                  <CardTitle className="text-white">ប្រវត្តិអ្នកឈ្នះ</CardTitle>
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button variant="ghost" size="sm" className="text-red-300 hover:text-red-400">
-                        <RotateCcw className="h-6 w-6" />
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent className="bg-red-950 border-red-700 text-white">
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>កំណត់ឡើងវិញទាំងអស់?</AlertDialogTitle>
-                        <AlertDialogDescription>សកម្មភាពនេះមិនអាចត្រឡប់វិញបានទេ។</AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>បោះបង់</AlertDialogCancel>
-                        <AlertDialogAction onClick={resetWinners} className="bg-red-600">
-                          កំណត់ឡើងវិញ
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </CardHeader>
-
-                <CardContent>
-                  {winnerHistory.length === 0 ? (
-                    <p className="text-white/60 py-20 text-center text-xl">នៅមិនទាន់មានអ្នកឈ្នះនៅឡើយទេ</p>
-                  ) : (
-                    <div className="space-y-5 max-h-96 overflow-y-auto pr-2">
-                      {winnerHistory.map((w, i) => (
-                        <div key={i} className="bg-white/10 p-6 rounded-2xl">
-                          <p className="font-bold text-white text-2xl break-words">{w.name}</p>
-                          <p className="text-sm text-yellow-200 mt-2">{w.timestamp}</p>
-                          <p className="text-xl mt-3 text-yellow-300">{w.category}</p>
-                        </div>
-                      ))}
+            <CardContent>
+              {winnerHistory.length === 0 ? (
+                <p className="text-white/60 py-20 text-center text-xl">នៅមិនទាន់មានអ្នកឈ្នះនៅឡើយទេ</p>
+              ) : (
+                <div className="space-y-5 max-h-96 overflow-y-auto pr-2">
+                  {winnerHistory.map((w, i) => (
+                    <div key={i} className="bg-white/10 p-6 rounded-2xl">
+                      <p className="font-bold text-white text-2xl break-words">{w.name}</p>
+                      <p className="text-sm text-yellow-200 mt-2">{w.timestamp}</p>
+                      <p className="text-xl mt-3 text-yellow-300">{w.category}</p>
                     </div>
-                  )}
-                </CardContent>
-              </Card>
-            </div>
-          )}
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }
